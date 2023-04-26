@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sun_point/ui/screen/drawer_page.dart';
 import 'package:sun_point/ui/widgets/side_bar_header.dart';
+import 'package:sun_point/utils/ui/constant.dart';
 import 'package:sun_point/utils/ui/file_path.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -32,29 +34,29 @@ class _HomePageState extends State<HomePage> {
                     'Account Overview',
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: AppColors.accent)),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: CarouselSlider.builder(
+                          itemCount: 4,
+                          itemBuilder: (context, index, realIndex) =>
+                              SvgPicture.asset(
+                                logo,
+                                height: 100,
+                              ),
+                          options: CarouselOptions(
+                              autoPlay: true,
+                              height: 260,
+                              viewportFraction: 1,
+                              padEnds: false)),
+                    ),
+                  ),
                   const SizedBox(
                     height: 16,
                   ),
-                  _contentOverView(),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        'Send Money',
-                        style: Theme.of(context).textTheme.headlineMedium,
-                      ),
-                      SvgPicture.asset(
-                        scan,
-                        color: Theme.of(context).iconTheme.color,
-                        width: 18,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  _contentSendMoney(),
                   const SizedBox(
                     height: 30,
                   ),

@@ -97,9 +97,18 @@ class _SignInPageState extends State<SignInPage> {
             height: 18,
           ),
           Text(
-            'Open An Account For Digital  E-Wallet Solutions.\nInstant Payouts. \n\nJoin For Free.',
+            'Open An Account For Digital  E-Wallet Solutions.\nInstant Payouts.',
             style: Theme.of(context).textTheme.bodyLarge,
-          )
+          ),
+          TextButton(
+            style: const ButtonStyle(
+                padding: MaterialStatePropertyAll(
+                    EdgeInsets.symmetric(vertical: 0))),
+            onPressed: () {},
+            child: const Text(
+              'Create an Account',
+            ),
+          ),
         ],
       ),
     );
@@ -127,7 +136,7 @@ class _SignInPageState extends State<SignInPage> {
         TextButton(
           onPressed: () {},
           child: const Text(
-            'Create an Account',
+            'Forget Password',
           ),
         ),
       ],
