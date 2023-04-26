@@ -1,10 +1,17 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_wallet/ui/screen/sign_in.dart';
-import 'package:flutter_wallet/util/constant.dart';
-import 'package:flutter_wallet/util/theme.dart';
+import 'package:sun_point/ui/screen/sign_in.dart';
+import 'package:sun_point/utils/notifications.dart';
+import 'package:sun_point/utils/routes.dart';
+import 'package:sun_point/utils/ui/constant.dart';
+import 'package:sun_point/utils/ui/theme.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+  // TODO: Enable notifications
+  // NotificationHelper.setup();
+  // NotificationHelper.listenOnToken();
   runApp(const MyApp());
 }
 
@@ -38,13 +45,25 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Wallet App',
-      debugShowCheckedModeBanner: false,
-      theme: lightTheme,
-      darkTheme: darkTheme,
-      themeMode: ThemeMode.system,
-      home: const SignInPage(),
+    return EasyLocalization(
+      supportedLocales: const [Locale('en'), Locale('zh')],
+      fallbackLocale: const Locale('en'),
+      path: 'assets/translation',
+      child: Builder(builder: (context) {
+        return MaterialApp(
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
+          localizationsDelegates: context.localizationDelegates,
+          title: 'Flutter Wallet App',
+          onGenerateRoute: Routes.generate,
+          initialRoute: Routes.mainAuth,
+          debugShowCheckedModeBanner: false,
+          theme: lightTheme,
+          darkTheme: darkTheme,
+          themeMode: ThemeMode.system,
+          home: const SignInPage(),
+        );
+      }),
     );
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_wallet/util/file_path.dart';
+import 'package:sun_point/ui/screen/drawer_page.dart';
+import 'package:sun_point/ui/widgets/side_bar_header.dart';
+import 'package:sun_point/utils/ui/file_path.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -12,109 +14,74 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
-      body: Padding(
-        padding: const EdgeInsets.only(left: 18, right: 18, top: 34),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              _contentHeader(),
-              const SizedBox(
-                height: 30,
-              ),
-              Text(
-                'Account Overview',
-                style: Theme.of(context).textTheme.headline4,
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              _contentOverView(),
-              const SizedBox(
-                height: 30,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    'Send Money',
-                    style: Theme.of(context).textTheme.headline4,
-                  ),
-                  SvgPicture.asset(
-                    scan,
-                    color: Theme.of(context).iconTheme.color,
-                    width: 18,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              _contentSendMoney(),
-              const SizedBox(
-                height: 30,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    'Services',
-                    style: Theme.of(context).textTheme.headline4,
-                  ),
-                  SvgPicture.asset(
-                    filter,
-                    color: Theme.of(context).iconTheme.color,
-                    width: 18,
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              _contentServices(context),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _contentHeader() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Row(
+    return DrawerPage(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SvgPicture.asset(
-              logo,
-              width: 34,
-            ),
+            const SideBarHeader(),
             const SizedBox(
-              width: 12,
+              height: 30,
             ),
-            Text(
-              'eWalle',
-              style: Theme.of(context).textTheme.headline3,
+            Padding(
+              padding: const EdgeInsets.only(left: 18, right: 18),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Account Overview',
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  _contentOverView(),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        'Send Money',
+                        style: Theme.of(context).textTheme.headlineMedium,
+                      ),
+                      SvgPicture.asset(
+                        scan,
+                        color: Theme.of(context).iconTheme.color,
+                        width: 18,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  _contentSendMoney(),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        'Services',
+                        style: Theme.of(context).textTheme.headlineMedium,
+                      ),
+                      SvgPicture.asset(
+                        filter,
+                        color: Theme.of(context).iconTheme.color,
+                        width: 18,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  _contentServices(context),
+                ],
+              ),
             )
           ],
         ),
-        InkWell(
-          onTap: () {
-            setState(() {
-              // print('call');
-              // xOffset = 240;
-              // yOffset = 180;
-              // scaleFactor = 0.7;
-              // isDrawerOpen = true;
-            });
-          },
-          child: SvgPicture.asset(
-            menu,
-            width: 16,
-            color: Theme.of(context).iconTheme.color,
-          ),
-        ),
-      ],
+      ),
     );
   }
 
@@ -134,14 +101,14 @@ class _HomePageState extends State<HomePage> {
             children: <Widget>[
               Text(
                 '20,600',
-                style: Theme.of(context).textTheme.headline5,
+                style: Theme.of(context).textTheme.headlineSmall,
               ),
               const SizedBox(
                 height: 12,
               ),
               Text(
                 'Current Balance',
-                style: Theme.of(context).textTheme.headline4!.copyWith(
+                style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                       fontSize: 15,
                       fontWeight: FontWeight.w400,
                     ),
@@ -221,7 +188,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Text(
                   'Mike',
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 )
               ],
             ),
@@ -252,7 +219,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Text(
                   'Joseph',
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 )
               ],
             ),
@@ -283,7 +250,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Text(
                   'Ashley',
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 )
               ],
             ),
@@ -340,7 +307,7 @@ class _HomePageState extends State<HomePage> {
                 Text(
                   value.title,
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const SizedBox(
                   height: 14,

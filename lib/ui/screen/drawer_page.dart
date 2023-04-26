@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_wallet/ui/screen/home_page.dart';
-import 'package:flutter_wallet/util/file_path.dart';
+
+import 'package:sun_point/ui/screen/home_page.dart';
+import 'package:sun_point/ui/widgets/side_bar_header.dart';
+import 'package:sun_point/utils/ui/file_path.dart';
 
 class DrawerPage extends StatefulWidget {
-  const DrawerPage({Key? key}) : super(key: key);
+  Widget child;
+  DrawerPage({
+    Key? key,
+    required this.child,
+  }) : super(key: key);
 
   @override
   _DrawerPageState createState() => _DrawerPageState();
@@ -17,6 +24,7 @@ class _DrawerPageState extends State<DrawerPage> with TickerProviderStateMixin {
   void initState() {
     rotationController = AnimationController(
         duration: const Duration(milliseconds: 300), vsync: this);
+
     super.initState();
   }
 
@@ -67,11 +75,11 @@ class _DrawerPageState extends State<DrawerPage> with TickerProviderStateMixin {
                             children: [
                               Text(
                                 "Carol Black",
-                                style: Theme.of(context).textTheme.headline6,
+                                style: Theme.of(context).textTheme.titleLarge,
                               ),
                               Text(
                                 "Seattle Washington",
-                                style: Theme.of(context).textTheme.bodyText1,
+                                style: Theme.of(context).textTheme.bodyLarge,
                               )
                             ],
                           )
@@ -110,7 +118,7 @@ class _DrawerPageState extends State<DrawerPage> with TickerProviderStateMixin {
                     ),
                     Text(
                       "Logout",
-                      style: Theme.of(context).textTheme.headline6,
+                      style: Theme.of(context).textTheme.titleLarge,
                     )
                   ],
                 ),
@@ -120,7 +128,7 @@ class _DrawerPageState extends State<DrawerPage> with TickerProviderStateMixin {
                 padding: const EdgeInsets.all(20),
                 child: Text(
                   "Ver 2.0.1",
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               )
             ],
@@ -151,7 +159,7 @@ class _DrawerPageState extends State<DrawerPage> with TickerProviderStateMixin {
                   borderRadius: sideBarActive
                       ? const BorderRadius.all(Radius.circular(40))
                       : const BorderRadius.all(Radius.circular(0)),
-                  child: const HomePage(),
+                  child: widget.child,
                 ),
               ),
             ),
@@ -202,7 +210,7 @@ class _DrawerPageState extends State<DrawerPage> with TickerProviderStateMixin {
         ),
         Text(
           name,
-          style: Theme.of(context).textTheme.headline6!.copyWith(
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
                 fontSize: 16,
                 fontWeight: (isSelected) ? FontWeight.w700 : FontWeight.w400,
               ),

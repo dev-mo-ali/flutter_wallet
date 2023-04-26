@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_wallet/ui/screen/drawer_page.dart';
-import 'package:flutter_wallet/util/file_path.dart';
+import 'package:sun_point/ui/screen/drawer_page.dart';
+import 'package:sun_point/ui/screen/home_page.dart';
+import 'package:sun_point/utils/routes.dart';
+import 'package:sun_point/utils/ui/constant.dart';
+import 'package:sun_point/utils/ui/file_path.dart';
 import 'package:intl/intl.dart';
 
 class SignInPage extends StatefulWidget {
@@ -18,7 +21,7 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Theme.of(context).backgroundColor,
+      color: Theme.of(context).scaffoldBackgroundColor,
       child: SafeArea(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -61,18 +64,7 @@ class _SignInPageState extends State<SignInPage> {
           children: <Widget>[
             Text(
               formattedTime,
-              style: Theme.of(context).textTheme.headline6,
-            ),
-            const SizedBox(
-              width: 30,
-            ),
-            SvgPicture.asset(cloud),
-            const SizedBox(
-              width: 8,
-            ),
-            Text(
-              '34° C',
-              style: Theme.of(context).textTheme.subtitle1,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
           ],
         ),
@@ -81,7 +73,7 @@ class _SignInPageState extends State<SignInPage> {
         ),
         Text(
           formattedDate,
-          style: Theme.of(context).textTheme.bodyText2,
+          style: Theme.of(context).textTheme.bodyMedium,
         )
       ],
     );
@@ -98,15 +90,15 @@ class _SignInPageState extends State<SignInPage> {
             height: 18,
           ),
           Text(
-            'eWalle',
-            style: Theme.of(context).textTheme.headline5,
+            'Sun Point',
+            style: Theme.of(context).textTheme.headlineSmall,
           ),
           const SizedBox(
             height: 18,
           ),
           Text(
             'Open An Account For Digital  E-Wallet Solutions.\nInstant Payouts. \n\nJoin For Free.',
-            style: Theme.of(context).textTheme.bodyText1,
+            style: Theme.of(context).textTheme.bodyLarge,
           )
         ],
       ),
@@ -116,33 +108,28 @@ class _SignInPageState extends State<SignInPage> {
   Widget _bottomContent() {
     return Column(
       children: <Widget>[
-        MaterialButton(
-          elevation: 0,
-          color: const Color(0xFFFFAC30),
-          height: 50,
-          minWidth: 200,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        ElevatedButton(
+          style: const ButtonStyle(
+            padding: MaterialStatePropertyAll(
+              EdgeInsets.symmetric(horizontal: 32, vertical: 10),
+            ),
+          ),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const DrawerPage(),
-              ),
-            );
+            Navigator.of(context).pushNamed(Routes.home);
           },
-          child: Text(
+          child: const Text(
             'Sign in',
-            style: Theme.of(context).textTheme.button,
           ),
         ),
         const SizedBox(
-          height: 16,
+          height: 6,
         ),
-        Text(
-          'Create an Account',
-          style: Theme.of(context).textTheme.bodyText2,
-        )
+        TextButton(
+          onPressed: () {},
+          child: const Text(
+            'Create an Account',
+          ),
+        ),
       ],
     );
   }
