@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import 'package:sun_point/ui/screen/home_page.dart';
+import 'package:sun_point/ui/screen/home.dart';
 import 'package:sun_point/ui/widgets/side_bar_header.dart';
 import 'package:sun_point/utils/ui/file_path.dart';
 
 class DrawerPage extends StatefulWidget {
   Widget child;
+  Widget? bottomBar;
   DrawerPage({
     Key? key,
     required this.child,
+    this.bottomBar,
   }) : super(key: key);
 
   @override
@@ -31,7 +33,7 @@ class _DrawerPageState extends State<DrawerPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).cardColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Stack(
         children: [
           Column(
@@ -43,9 +45,9 @@ class _DrawerPageState extends State<DrawerPage> with TickerProviderStateMixin {
                     height: 100,
                     width: MediaQuery.of(context).size.width * 0.6,
                     decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                            bottomRight: Radius.circular(60)),
-                        color: Theme.of(context).backgroundColor),
+                      borderRadius: const BorderRadius.only(
+                          bottomRight: Radius.circular(60)),
+                    ),
                     child: Center(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -53,7 +55,6 @@ class _DrawerPageState extends State<DrawerPage> with TickerProviderStateMixin {
                           Container(
                             decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: Colors.white,
                                 border:
                                     Border.all(color: const Color(0xffD8D9E4))),
                             child: CircleAvatar(
@@ -153,13 +154,18 @@ class _DrawerPageState extends State<DrawerPage> with TickerProviderStateMixin {
                   borderRadius: sideBarActive
                       ? const BorderRadius.all(Radius.circular(40))
                       : const BorderRadius.all(Radius.circular(0)),
-                  color: Colors.white,
+                  color: Theme.of(context).scaffoldBackgroundColor,
                 ),
                 child: ClipRRect(
                   borderRadius: sideBarActive
                       ? const BorderRadius.all(Radius.circular(40))
                       : const BorderRadius.all(Radius.circular(0)),
-                  child: widget.child,
+                  child: Column(
+                    children: [
+                      Expanded(child: widget.child),
+                      widget.bottomBar ?? const SizedBox()
+                    ],
+                  ),
                 ),
               ),
             ),

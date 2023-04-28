@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sun_point/ui/screen/drawer_page.dart';
-import 'package:sun_point/ui/screen/home_page.dart';
+import 'package:sun_point/ui/screen/home.dart';
 import 'package:sun_point/utils/routes.dart';
 import 'package:sun_point/utils/ui/constant.dart';
 import 'package:sun_point/utils/ui/file_path.dart';
 import 'package:intl/intl.dart';
 
-class SignInPage extends StatefulWidget {
-  const SignInPage({Key? key}) : super(key: key);
+class MainAuthPage extends StatefulWidget {
+  const MainAuthPage({Key? key}) : super(key: key);
 
   @override
-  _SignInPageState createState() => _SignInPageState();
+  _MainAuthPageState createState() => _MainAuthPageState();
 }
 
-class _SignInPageState extends State<SignInPage> {
+class _MainAuthPageState extends State<MainAuthPage> {
   static DateTime now = DateTime.now();
   String formattedTime = DateFormat.jm().format(now);
   String formattedDate = DateFormat('MMM d, yyyy | EEEEEE').format(now);
@@ -104,7 +104,9 @@ class _SignInPageState extends State<SignInPage> {
             style: const ButtonStyle(
                 padding: MaterialStatePropertyAll(
                     EdgeInsets.symmetric(vertical: 0))),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushNamed(Routes.register);
+            },
             child: const Text(
               'Create an Account',
             ),

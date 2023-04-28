@@ -4,7 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:sun_point/utils/auth.dart';
-// import 'package:wise_premium/logic/providers/account.dart';
+// import 'package:sun_point/logic/providers/account.dart';
 
 class NotificationHelper {
   static void listenOnToken() {

@@ -1,3 +1,18 @@
 {
-    
+    "Login":"Login",
+    "Phone Number":"Phone Number",
+    "Password":"Password",
+    "Register":"Register",
+    "Name":"Name",
+    "Email":"Email",
+    "Password Confirmation":"Password Confirmation",
+    "Referral Code":"Referral Code",
+    "Network":"Network",
+    "Exchange":"Exchange",
+    "Top Up":"Top Up",
+    "QR":"QR",
+    "More Options":"More\nOptions",
+    "Profile":"Profile",
+    "Home":"Home",
+    "Account":"Account"
 }

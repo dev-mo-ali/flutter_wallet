@@ -12,20 +12,30 @@ class SideBarHeader extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Row(
-            children: <Widget>[
-              SvgPicture.asset(
-                logo,
-                width: 34,
-              ),
-              const SizedBox(
-                width: 12,
-              ),
-              Text(
-                'Sun Point',
-                style: Theme.of(context).textTheme.displaySmall,
-              )
-            ],
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: <Widget>[
+                    SvgPicture.asset(
+                      logo,
+                      width: 34,
+                    ),
+                    const SizedBox(
+                      width: 12,
+                    ),
+                    Text(
+                      'Sun Point',
+                      style: Theme.of(context).textTheme.displaySmall,
+                    )
+                  ],
+                ),
+                IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.notifications_outlined))
+              ],
+            ),
           ),
           SvgPicture.asset(
             menu,

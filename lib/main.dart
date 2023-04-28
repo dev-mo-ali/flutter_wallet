@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:sun_point/ui/screen/sign_in.dart';
+import 'package:sun_point/ui/screen/auth/main.dart';
 import 'package:sun_point/utils/notifications.dart';
 import 'package:sun_point/utils/routes.dart';
 import 'package:sun_point/utils/ui/constant.dart';
@@ -60,8 +60,8 @@ class _MyAppState extends State<MyApp> {
           debugShowCheckedModeBanner: false,
           theme: lightTheme,
           darkTheme: darkTheme,
-          themeMode: ThemeMode.system,
-          home: const SignInPage(),
+          themeMode: ThemeMode.light,
+          // home: const MainAuthPage(),
         );
       }),
     );
