@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sun_point/logic/controllers/auth/start_up.dart';
 import 'package:sun_point/logic/models/auth/start_up.dart';
+import 'package:sun_point/ui/screen/auth/setup_tpin.dart';
 // import 'package:sun_point/ui/pages/auth/tpin.dart';
 import 'package:sun_point/utils/auth.dart';
 import 'package:sun_point/utils/routes.dart';
@@ -21,18 +22,16 @@ class StartUpPage extends StatelessWidget {
           if (state.goUpdate == true) {
             //   Navigator.of(context)
             //       .pushNamedAndRemoveUntil(Routes.upgrade, (route) => false);
-          }
-          //else if (state.login == true && state.done) {
-          //   if (state.goEmailVerify == true) {
-          //     Navigator.of(context).pushReplacementNamed(Routes.emailVerify);
-          //   } else if (state.goSetup == true) {
-          //     Navigator.of(context).pushReplacementNamed(Routes.tpin,
-          //         arguments: TPINPageArgs(purpose: TPINPagePurpose.setup));
-          //   } else if (state.goSetup == false) {
-          //     Navigator.of(context).pushReplacementNamed(Routes.home);
-          //   }
-          // }
-          else if (state.login == false || state.wrongCred == true) {
+          } else if (state.login == true && state.done) {
+            if (state.goEmailVerify == true) {
+              Navigator.of(context).pushReplacementNamed(Routes.emailVerify);
+            } else if (state.goSetup == true) {
+              Navigator.of(context).pushReplacementNamed(Routes.setupTPIN,
+                  arguments: SetupTPINArgs());
+            } else if (state.goSetup == false) {
+              Navigator.of(context).pushReplacementNamed(Routes.home);
+            }
+          } else if (state.login == false || state.wrongCred == true) {
             if (state.wrongCred == true) {
               User.logout().then((value) => null);
             }

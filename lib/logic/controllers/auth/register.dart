@@ -20,20 +20,29 @@ class RegisterCubit extends Cubit<RegisterState> {
     return true;
   }
 
-  // send request to send otp registeration to the api
-  void register(String number) async {
-    emit(state.copyWith(loading: true));
-
-    ServerResponse response =
-        await AuthAPI.checkRegistrationCode(state.countryCode + number);
-    print(response.response.body);
-    if (response.isSuccess) {
-      emit(state.copyWith(error: '', done: true, loading: false));
-    } else {
-      emit(state.copyWith(error: response.code.code, loading: false));
-      emit(state.copyWith(error: ''));
+  bool validateUserID(String userId) {
+    if (userId.length != 4) {
+      emit(state.copyWith(userIdError: 'fieldReq'));
+      return false;
     }
+    return true;
   }
 
-  void doneToFalse() => emit(state.copyWith(done: false));
+  // send request to send otp registeration to the api
+  void register(String number, String uid) async {
+    if (validatePhoneNumber(number) && validateUserID(uid) && !state.loading) {
+      emit(state.copyWith(loading: true, phoneError: '', userIdError: ''));
+
+      ServerResponse response =
+          await AuthAPI.checkRegistrationCode(state.countryCode + number);
+      print(response.response.body);
+      if (response.isSuccess) {
+        emit(state.copyWith(error: '', done: true, loading: false));
+        emit(state.copyWith(done: false));
+      } else {
+        emit(state.copyWith(error: response.code.code, loading: false));
+        emit(state.copyWith(error: ''));
+      }
+    }
+  }
 }

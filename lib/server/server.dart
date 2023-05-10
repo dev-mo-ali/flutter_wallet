@@ -12,7 +12,7 @@ enum _Env {
 }
 
 class Server {
-  static const _Env _env = _Env.local; // set the server env
+  static const _Env _env = _Env.staging; // set the server env
 
   static Future<ServerResponse> send(Function method, String path,
       {Object? body,
@@ -114,7 +114,7 @@ class Server {
         return 'https://api-v1.wisepremium.com';
 
       case _Env.staging:
-        return 'https://staging-api.wisepremium.com';
+        return 'https://staging-user-api.worldpoint2u.com';
 
       case _Env.local:
         return 'http://10.0.2.2:8000';

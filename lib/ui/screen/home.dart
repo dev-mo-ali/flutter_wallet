@@ -135,7 +135,9 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      bottomBar: BottomBar(),
+      bottomBar: const BottomBar(
+        currentIndex: 0,
+      ),
     );
   }
 

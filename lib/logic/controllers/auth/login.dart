@@ -7,42 +7,50 @@ import 'package:sun_point/server/response.dart';
 import 'package:sun_point/server/server.dart';
 import 'package:sun_point/utils/auth.dart';
 import 'package:sun_point/logic/models/auth/login.dart';
+import 'package:sun_point/utils/validators.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(LoginState());
 
   void setCode(String code) => emit(state.copyWith(countryCode: code));
 
-  // send login request to the api
-  void login(String number, String password) async {
-    // check if number field is not empty
-    if (number.isEmpty) {
-      emit(state.copyWith(phoneError: 'fieldReq'));
-      return;
+  bool validatePhoneNumber(String number) {
+    String? numberErr = phoneNumberValidator(number);
+    if (numberErr != null) {
+      emit(state.copyWith(phoneError: numberErr));
+      return false;
     }
     emit(state.copyWith(phoneError: ''));
 
-    // send the request
-    emit(state.copyWith(loading: true));
-    ServerResponse response =
-        await AuthAPI.login(state.countryCode + number, password);
-    if (response.isSuccess) {
-      // set user data
-      await User.setUser(response.data as Map);
-      final token = (await FirebaseMessaging.instance.getToken());
-      if (token != null) {
-        await AccountAPI.updateFCMToken(token);
+    return true;
+  }
+
+  // send login request to the api
+  void login(String number, String password) async {
+    if (!state.loading && validatePhoneNumber(number)) {
+      // send the request
+      emit(state.copyWith(loading: true));
+      ServerResponse response =
+          await AuthAPI.login(state.countryCode + number, password);
+      if (response.isSuccess) {
+        // set user data
+        await User.setUser(response.data as Map);
+        // TODO:
+        // final token = (await FirebaseMessaging.instance.getToken());
+        // if (token != null) {
+        //   await AccountAPI.updateFCMToken(token);
+        // }
+        emit(state.copyWith(
+          loading: false,
+          done: true,
+          error: '',
+          goSetup: response.data['setup'] != 1,
+          goEmailVerify: response.data['email_verified_at'] == null,
+        ));
+      } else {
+        emit(state.copyWith(loading: false, error: response.code.code));
+        emit(state.copyWith(error: ''));
       }
-      emit(state.copyWith(
-        loading: false,
-        done: true,
-        error: '',
-        goSetup: response.data['setup'] != 1,
-        goEmailVerify: response.data['email_verified_at'] == null,
-      ));
-    } else {
-      emit(state.copyWith(loading: false, error: response.code.code));
-      emit(state.copyWith(error: ''));
     }
   }
 }

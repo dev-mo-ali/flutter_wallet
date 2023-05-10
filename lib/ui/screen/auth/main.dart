@@ -126,7 +126,7 @@ class _MainAuthPageState extends State<MainAuthPage> {
             ),
           ),
           onPressed: () {
-            Navigator.of(context).pushNamed(Routes.home);
+            Navigator.of(context).pushNamed(Routes.login);
           },
           child: const Text(
             'Sign in',
