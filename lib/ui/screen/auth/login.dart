@@ -16,7 +16,7 @@ class LoginPage extends StatelessWidget {
 
   // TextEditingController phone = TextEditingController(),
   //     password = TextEditingController();
-  TextEditingController phone = TextEditingController(text: '123'),
+  TextEditingController phone = TextEditingController(text: '12345678'),
       password = TextEditingController(text: '12345678');
   GlobalKey<FormState> _formKey = GlobalKey();
   @override

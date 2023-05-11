@@ -4,6 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:sun_point/ui/screen/home.dart';
 import 'package:sun_point/ui/widgets/side_bar_header.dart';
+import 'package:sun_point/utils/auth.dart';
+import 'package:sun_point/utils/routes.dart';
 import 'package:sun_point/utils/ui/file_path.dart';
 
 class DrawerPage extends StatefulWidget {
@@ -41,53 +43,63 @@ class _DrawerPageState extends State<DrawerPage> with TickerProviderStateMixin {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    height: 100,
-                    width: MediaQuery.of(context).size.width * 0.6,
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.only(
-                          bottomRight: Radius.circular(60)),
-                    ),
-                    child: Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border:
-                                    Border.all(color: const Color(0xffD8D9E4))),
-                            child: CircleAvatar(
-                              radius: 22.0,
-                              backgroundColor:
-                                  Theme.of(context).backgroundColor,
-                              child: ClipRRect(
-                                child: SvgPicture.asset(avatorOne),
-                                borderRadius: BorderRadius.circular(50.0),
-                              ),
+                  FutureBuilder(
+                      future: User.getUser(),
+                      builder: (context, snap) {
+                        if (!snap.hasData) {
+                          return const SizedBox();
+                        }
+                        return Container(
+                          height: 100,
+                          width: MediaQuery.of(context).size.width * 0.6,
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.only(
+                                bottomRight: Radius.circular(60)),
+                          ),
+                          child: Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                          color: const Color(0xffD8D9E4))),
+                                  child: CircleAvatar(
+                                    radius: 22.0,
+                                    backgroundColor:
+                                        Theme.of(context).backgroundColor,
+                                    child: ClipRRect(
+                                      child: SvgPicture.asset(avatorOne),
+                                      borderRadius: BorderRadius.circular(50.0),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      snap.data!.name!,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge,
+                                    ),
+                                    Text(
+                                      snap.data!.username,
+                                      style:
+                                          Theme.of(context).textTheme.bodyLarge,
+                                    )
+                                  ],
+                                )
+                              ],
                             ),
                           ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Carol Black",
-                                style: Theme.of(context).textTheme.titleLarge,
-                              ),
-                              Text(
-                                "Seattle Washington",
-                                style: Theme.of(context).textTheme.bodyLarge,
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  )
+                        );
+                      })
                 ],
               ),
               Expanded(
@@ -106,22 +118,29 @@ class _DrawerPageState extends State<DrawerPage> with TickerProviderStateMixin {
               ),
               Container(
                 padding: const EdgeInsets.all(20),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.power_settings_new,
-                      size: 24,
-                      color: Theme.of(context).iconTheme.color,
-                      // color: sideBarActive ? Colors.black : Colors.white,
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      "Logout",
-                      style: Theme.of(context).textTheme.titleLarge,
-                    )
-                  ],
+                child: InkWell(
+                  onTap: () async {
+                    await User.logout();
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        Routes.mainAuth, (route) => false);
+                  },
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.power_settings_new,
+                        size: 24,
+                        color: Theme.of(context).iconTheme.color,
+                        // color: sideBarActive ? Colors.black : Colors.white,
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        "Logout",
+                        style: Theme.of(context).textTheme.titleLarge,
+                      )
+                    ],
+                  ),
                 ),
               ),
               Container(

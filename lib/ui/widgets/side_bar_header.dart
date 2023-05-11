@@ -26,7 +26,7 @@ class SideBarHeader extends StatelessWidget {
                       width: 12,
                     ),
                     Text(
-                      'Sun Point',
+                      'World Point',
                       style: Theme.of(context).textTheme.displaySmall,
                     )
                   ],

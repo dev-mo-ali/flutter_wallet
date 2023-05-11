@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:sun_point/logic/controllers/auth/register_succ.dart';
-import 'package:sun_point/logic/controllers/auth/setup_succ.dart';
 import 'package:sun_point/ui/screen/account/account.dart';
-import 'package:sun_point/ui/screen/account/change_tpin1.dart';
-import 'package:sun_point/ui/screen/account/change_tpin2.dart';
+import 'package:sun_point/ui/screen/account/account_info.dart';
+import 'package:sun_point/ui/screen/account/reset_tpin1.dart';
+import 'package:sun_point/ui/screen/account/reset_tpin2.dart';
 import 'package:sun_point/ui/screen/account/reset_password.dart';
+import 'package:sun_point/ui/screen/account/reset_security_question.dart';
 import 'package:sun_point/ui/screen/auth/email_verify.dart';
 import 'package:sun_point/ui/screen/auth/login.dart';
 import 'package:sun_point/ui/screen/auth/otp.dart';
 import 'package:sun_point/ui/screen/auth/register.dart';
 import 'package:sun_point/ui/screen/auth/register2.dart';
+import 'package:sun_point/ui/screen/auth/register_succ.dart';
 import 'package:sun_point/ui/screen/auth/security_question.dart';
+import 'package:sun_point/ui/screen/auth/setup_succ.dart';
 import 'package:sun_point/ui/screen/auth/setup_tpin.dart';
 import 'package:sun_point/ui/screen/auth/start_up.dart';
 import 'package:sun_point/ui/screen/auth/update_email.dart';
@@ -27,14 +29,16 @@ class Routes {
   static const otp = '/otp';
   static const account = '/account';
   static const resetPassword = '/resetPassword';
-  static const changeTPIN1 = '/changeTPIN1';
-  static const changeTPIN2 = '/changeTPIN2';
+  static const resetTPIN1 = '/resetTPIN1';
+  static const resetTPIN2 = '/resetTPIN2';
   static const setupTPIN = '/setupTPIN';
   static const emailVerify = '/emailVerify';
   static const updateEmail = '/updateEmail';
   static const registerSucc = '/registerSucc';
   static const setupQuestion = '/setupQuestion';
+  static const resetQuestion = '/resetQuestion';
   static const setupSucc = '/setupSucc';
+  static const accountInfo = '/accountInfo';
 
   static Route? generate(RouteSettings settings) {
     switch (settings.name) {
@@ -62,10 +66,11 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const AccountPage());
       case resetPassword:
         return MaterialPageRoute(builder: (_) => ResetPasswordPage());
-      case changeTPIN1:
-        return MaterialPageRoute(builder: (_) => ChangeTPIN1Page());
-      case changeTPIN2:
-        return MaterialPageRoute(builder: (_) => ChangeTPIN2Page());
+      case resetTPIN1:
+        return MaterialPageRoute(builder: (_) => ResetTPIN1Page());
+      case resetTPIN2:
+        var args = settings.arguments as ResetTPIN2Args;
+        return MaterialPageRoute(builder: (_) => ResetTPIN2Page(args: args));
       case setupTPIN:
         var args = settings.arguments as SetupTPINArgs;
         return MaterialPageRoute(builder: (_) => SetupTPINPage(args: args));
@@ -80,6 +85,10 @@ class Routes {
       case setupQuestion:
         var args = settings.arguments as SecurityQueArgs;
         return MaterialPageRoute(builder: (_) => SecurityQuePage(args: args));
+      case resetQuestion:
+        return MaterialPageRoute(builder: (_) => ResetSecurityQuePage());
+      case accountInfo:
+        return MaterialPageRoute(builder: (_) => AccountInfoPage());
     }
   }
 }

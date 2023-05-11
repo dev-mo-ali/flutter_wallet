@@ -10,7 +10,7 @@ String? phoneNumberValidator(String? value) {
   if (value == null || value.isEmpty) {
     return 'fieldReq'.tr();
   }
-  RegExp regExp = RegExp(r'^\d+$');
+  RegExp regExp = RegExp(r'^\d{8,}$');
   if (!regExp.hasMatch(value)) {
     return 'invalidNum'.tr();
   }

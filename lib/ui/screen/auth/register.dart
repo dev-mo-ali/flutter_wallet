@@ -15,15 +15,15 @@ import 'package:sun_point/utils/validators.dart';
 
 class RegisterPage extends StatelessWidget {
   List userIdFields = [];
-  // TextEditingController phone = TextEditingController(),
-  //     agent = TextEditingController(),
-  //     password = TextEditingController(),
-  //     passConf = TextEditingController();
+  TextEditingController phone = TextEditingController(),
+      agent = TextEditingController(),
+      password = TextEditingController(),
+      passConf = TextEditingController();
 
-  TextEditingController phone = TextEditingController(text: '123'),
-      agent = TextEditingController(text: "DT"),
-      password = TextEditingController(text: '12345678'),
-      passConf = TextEditingController(text: '12345678');
+  // TextEditingController phone = TextEditingController(text: '123456789'),
+  //     agent = TextEditingController(text: "AA"),
+  //     password = TextEditingController(text: '12345678'),
+  //     passConf = TextEditingController(text: '12345678');
 
   GlobalKey<FormState> _formKey = GlobalKey();
 
@@ -31,11 +31,12 @@ class RegisterPage extends StatelessWidget {
     userIdFields = List.generate(
         4,
         (index) => {
-              'controller': TextEditingController(text: '1'),
+              'controller': TextEditingController(),
               'node': FocusNode(),
               'filled': false
             });
   }
+
   String? passwordValidator(String? value) {
     if (value == null || value.isEmpty) {
       return 'fieldReq'.tr();

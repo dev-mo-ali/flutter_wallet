@@ -90,7 +90,7 @@ class _MainAuthPageState extends State<MainAuthPage> {
             height: 18,
           ),
           Text(
-            'Sun Point',
+            'World Point',
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           const SizedBox(

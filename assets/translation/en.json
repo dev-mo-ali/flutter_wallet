@@ -80,8 +80,16 @@
     "Set Security Question":"Set Security Question",
     "secQueSum":"Set Security Question",
     "Your Answer":"Your Answer",
-    "setupSuccSum":"Your setup is complete."
-  
+    "setupSuccSum":"Your setup is complete.",
+    "IMEI_ERROR":"Wrong device identifier",
+    "By continuing, you agree to our ":"By continuing, you agree to our ",
+    "Privacy Policy":"Privacy Policy",
+    "WRONG_CREDENTIALS":"WRONG_CREDENTIALS",
+    "INVALID_CODE":"Invalid Code",
+    "INVALID_CREDENTIAL":"Invalid Credential",
+    "resetPassSucc":"Congratulations! Your request to update your password is successful!",
+    "resetTPINSucc":"Congratulations! Your request to update your transaction PIN is successful!",
+    "resetQueSucc":"Congratulations! Your request to update your security question is successful!"
 
 
 }

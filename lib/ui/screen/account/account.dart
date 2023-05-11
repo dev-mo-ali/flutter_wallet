@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:sun_point/server/server.dart';
 import 'package:sun_point/ui/screen/drawer_page.dart';
 import 'package:sun_point/ui/widgets/bottom_bar.dart';
+import 'package:sun_point/ui/widgets/lang_dialog.dart';
 import 'package:sun_point/ui/widgets/side_bar_header.dart';
 import 'package:sun_point/utils/auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sun_point/utils/routes.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AccountPage extends StatelessWidget {
   const AccountPage({super.key});
@@ -24,8 +26,8 @@ class AccountPage extends StatelessWidget {
                   SizedBox(
                     height: 100,
                     child: GestureDetector(
-                      // onTap: () =>
-                      //     Navigator.of(context).pushNamed(Routes.accountInfo),
+                      onTap: () =>
+                          Navigator.of(context).pushNamed(Routes.accountInfo),
                       child: Stack(
                         children: [
                           // SizedBox(
@@ -94,9 +96,10 @@ class AccountPage extends StatelessWidget {
                                               height: 8,
                                             ),
                                             Text(snapshot.data!.username,
-                                                style: const TextStyle(
-                                                  fontSize: 17,
-                                                )),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge!
+                                                    .copyWith(fontSize: 14)),
                                           ],
                                         ),
                                       ],
@@ -173,7 +176,7 @@ class AccountPage extends StatelessWidget {
                         ),
                         InkWell(
                           onTap: () => Navigator.of(context)
-                              .pushNamed(Routes.changeTPIN1),
+                              .pushNamed(Routes.resetTPIN1),
                           child: Container(
                             padding: const EdgeInsets.all(8),
                             child: Card(
@@ -198,8 +201,8 @@ class AccountPage extends StatelessWidget {
                           ),
                         ),
                         InkWell(
-                          // onTap: () => Navigator.of(context)
-                          //     .pushNamed(Routes.resetSecurityQue),
+                          onTap: () => Navigator.of(context)
+                              .pushNamed(Routes.resetQuestion),
                           child: Container(
                             padding: const EdgeInsets.all(8),
                             child: Card(
@@ -224,9 +227,9 @@ class AccountPage extends StatelessWidget {
                           ),
                         ),
                         InkWell(
-                          // onTap: () => showDialog(
-                          //     context: context,
-                          //     builder: (_) => const SetLangDialog()),
+                          onTap: () => showDialog(
+                              context: context,
+                              builder: (_) => const SetLangDialog()),
                           child: Container(
                             padding: const EdgeInsets.all(8),
                             decoration: const BoxDecoration(border: Border()),
@@ -287,10 +290,9 @@ class AccountPage extends StatelessWidget {
                         ),
                         InkWell(
                           onTap: () async {
-                            // Uri url = Uri.parse('https://wisepremium.com/contact/');
-                            // if (await canLaunchUrl(url)) {
-                            //   launchUrl(url, mode: LaunchMode.inAppWebView);
-                            // }
+                            Uri url =
+                                Uri.parse('https://worldpoint2u.com/about/#');
+                            launchUrl(url, mode: LaunchMode.inAppWebView);
                           },
                           child: Container(
                             padding: const EdgeInsets.all(8),
@@ -317,10 +319,9 @@ class AccountPage extends StatelessWidget {
                         ),
                         InkWell(
                           onTap: () async {
-                            // Uri url = Uri.parse('https://wisepremium.com/');
-                            // if (await canLaunchUrl(url)) {
-                            //   launchUrl(url, mode: LaunchMode.inAppWebView);
-                            // }
+                            Uri url =
+                                Uri.parse('https://worldpoint2u.com/about/');
+                            launchUrl(url, mode: LaunchMode.inAppWebView);
                           },
                           child: Container(
                             padding: const EdgeInsets.all(8),

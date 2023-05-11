@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,6 +14,7 @@ import 'package:sun_point/ui/widgets/country_dialog.dart';
 import 'package:sun_point/ui/widgets/erro_dialog.dart';
 import 'package:sun_point/utils/routes.dart';
 import 'package:sun_point/utils/validators.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Register2Args {
   Map registeredUser;
@@ -31,19 +33,19 @@ class Register2Page extends StatelessWidget {
     required this.args,
   }) : super(key: key);
 
-  // TextEditingController name = TextEditingController(),
-  //     email = TextEditingController(),
-  //     idNumber = TextEditingController(),
-  //     emergencyName = TextEditingController(),
-  //     emergencyPhone = TextEditingController(),
-  //     emergencyRelationship = TextEditingController();
+  TextEditingController name = TextEditingController(),
+      email = TextEditingController(),
+      idNumber = TextEditingController(),
+      emergencyName = TextEditingController(),
+      emergencyPhone = TextEditingController(),
+      emergencyRelationship = TextEditingController();
 
-  TextEditingController name = TextEditingController(text: 'ghale'),
-      email = TextEditingController(text: 'ghale@evo.com'),
-      idNumber = TextEditingController(text: '123'),
-      emergencyName = TextEditingController(text: 'mohamed'),
-      emergencyPhone = TextEditingController(text: '123'),
-      emergencyRelationship = TextEditingController(text: 'co-worker');
+  // TextEditingController name = TextEditingController(text: 'ghale'),
+  //     email = TextEditingController(text: 'ghale@evo.com'),
+  //     idNumber = TextEditingController(text: '123'),
+  //     emergencyName = TextEditingController(text: 'mohamed'),
+  //     emergencyPhone = TextEditingController(text: '123456789'),
+  //     emergencyRelationship = TextEditingController(text: 'co-worker');
   GlobalKey<FormState> _formKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
@@ -456,6 +458,32 @@ class Register2Page extends StatelessWidget {
                           )
                         : const SizedBox();
                   },
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    style: Theme.of(context).textTheme.labelMedium,
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: 'By continuing, you agree to our '.tr(),
+                      ),
+                      TextSpan(
+                          text: 'Privacy Policy'.tr(),
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () async {
+                              final url = Uri.parse(
+                                  'https://worldpoint2u.com/privacy-terms/');
+                              if (await canLaunchUrl(url)) {
+                                launchUrl(url, mode: LaunchMode.inAppWebView);
+                              }
+                            }),
+                    ],
+                  ),
                 ),
                 const SizedBox(
                   height: 8,

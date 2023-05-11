@@ -21,14 +21,16 @@ class EmailVerifyCubit extends Cubit<EmailVerifyState> {
 
   // verify the code
   void verify(String code) async {
-    emit(state.copyWith(loading: true));
-    User user = await User.getUser();
-    ServerResponse response = await AuthAPI.emailVerify(user.email!, code);
-    if (response.isSuccess) {
-      emit(state.copyWith(loading: false, done: true, error: ''));
-    } else {
-      emit(state.copyWith(loading: false, error: response.code.code));
-      emit(state.copyWith(error: ''));
+    if (!state.loading) {
+      emit(state.copyWith(loading: true));
+      User user = await User.getUser();
+      ServerResponse response = await AuthAPI.emailVerify(user.email!, code);
+      if (response.isSuccess) {
+        emit(state.copyWith(loading: false, done: true, error: ''));
+      } else {
+        emit(state.copyWith(loading: false, error: response.code.code));
+        emit(state.copyWith(error: ''));
+      }
     }
   }
 

@@ -69,11 +69,13 @@ class AuthAPI {
   static Future<ServerResponse> login(
     String number,
     String password,
+    String imei,
   ) async {
     ServerResponse response = await Server.send(http.post, 'user/user_login',
         body: {
           "username": number,
           "password": password,
+          "imei": imei,
           "device_type": "APP",
         },
         useToken: false);

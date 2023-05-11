@@ -33,14 +33,16 @@ class SecurityQueCubit extends Cubit<SecurityQueState> {
 
   // send setup request to the api
   void setup(String answer, String tpin) async {
-    emit(state.copyWith(submitting: true));
-    ServerResponse response =
-        await AuthAPI.firstSetup(state.currentQuestion!, answer, tpin);
-    if (response.isSuccess) {
-      emit(state.copyWith(submitting: false, done: true, error: ''));
-    } else {
-      emit(state.copyWith(submitting: false, error: response.code.code));
-      emit(state.copyWith(error: ''));
+    if (!state.submitting) {
+      emit(state.copyWith(submitting: true));
+      ServerResponse response =
+          await AuthAPI.firstSetup(state.currentQuestion!, answer, tpin);
+      if (response.isSuccess) {
+        emit(state.copyWith(submitting: false, done: true, error: ''));
+      } else {
+        emit(state.copyWith(submitting: false, error: response.code.code));
+        emit(state.copyWith(error: ''));
+      }
     }
   }
 

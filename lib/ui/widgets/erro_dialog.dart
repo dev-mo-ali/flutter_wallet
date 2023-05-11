@@ -49,7 +49,6 @@ class ErrorDialog extends StatelessWidget {
               error,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                color: Colors.white,
                 fontSize: 18,
               ),
             ).tr(),

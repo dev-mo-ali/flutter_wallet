@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_udid/flutter_udid.dart';
 
 import 'package:sun_point/logic/providers/account.dart';
 import 'package:sun_point/logic/providers/auth.dart';
@@ -30,8 +31,10 @@ class LoginCubit extends Cubit<LoginState> {
     if (!state.loading && validatePhoneNumber(number)) {
       // send the request
       emit(state.copyWith(loading: true));
+      String imei = await FlutterUdid.udid;
+      print(imei);
       ServerResponse response =
-          await AuthAPI.login(state.countryCode + number, password);
+          await AuthAPI.login(state.countryCode + number, password, imei);
       if (response.isSuccess) {
         // set user data
         await User.setUser(response.data as Map);
