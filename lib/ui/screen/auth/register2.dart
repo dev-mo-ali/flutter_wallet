@@ -248,56 +248,72 @@ class Register2Page extends StatelessWidget {
                     return state.icImg;
                   },
                   builder: (context, state) {
-                    return Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      decoration: BoxDecoration(
-                        borderRadius: (Theme.of(context)
-                                .inputDecorationTheme
-                                .enabledBorder as OutlineInputBorder)
-                            .borderRadius,
-                        border: Border.all(
-                            color: Theme.of(context)
-                                .inputDecorationTheme
-                                .enabledBorder!
-                                .borderSide
-                                .color),
-                      ),
-                      child: Row(
-                        children: [
-                          const Icon(FontAwesomeIcons.idCard),
-                          const SizedBox(
-                            width: 8,
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          decoration: BoxDecoration(
+                            borderRadius: (Theme.of(context)
+                                    .inputDecorationTheme
+                                    .enabledBorder as OutlineInputBorder)
+                                .borderRadius,
+                            border: Border.all(
+                                color: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .enabledBorder!
+                                    .borderSide
+                                    .color),
                           ),
-                          Expanded(
-                            child: InkWell(
-                              onTap: () =>
-                                  context.read<Register2Cubit>().selectICImg(),
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 10),
-                                child: Text(
-                                  state == null
-                                      ? 'Select IC / Passport Image'
-                                      : state.split('/').last,
-                                  style: Theme.of(context)
-                                      .inputDecorationTheme
-                                      .labelStyle,
-                                ).tr(),
+                          child: Row(
+                            children: [
+                              const Icon(FontAwesomeIcons.idCard),
+                              const SizedBox(
+                                width: 8,
                               ),
-                            ),
-                          ),
-                          state != null
-                              ? ClipRRect(
-                                  borderRadius: BorderRadius.circular(6),
-                                  child: Image.file(
-                                    File(state),
-                                    width: 40,
-                                    fit: BoxFit.contain,
+                              Expanded(
+                                child: InkWell(
+                                  onTap: () => context
+                                      .read<Register2Cubit>()
+                                      .selectICImg(),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10),
+                                    child: Text(
+                                      state == null
+                                          ? 'Select IC / Passport Image'
+                                          : state.split('/').last,
+                                      style: Theme.of(context)
+                                          .inputDecorationTheme
+                                          .labelStyle,
+                                    ).tr(),
                                   ),
-                                )
-                              : const SizedBox()
-                        ],
-                      ),
+                                ),
+                              ),
+                              state != null
+                                  ? ClipRRect(
+                                      borderRadius: BorderRadius.circular(6),
+                                      child: Image.file(
+                                        File(state),
+                                        width: 40,
+                                        fit: BoxFit.contain,
+                                      ),
+                                    )
+                                  : const SizedBox()
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 4,
+                        ),
+                        Padding(
+                          padding: const EdgeInsetsDirectional.only(start: 8),
+                          child: Text(
+                            'Max size: 5MB',
+                            style: Theme.of(context).textTheme.labelSmall,
+                          ).tr(),
+                        )
+                      ],
                     );
                   },
                 ),

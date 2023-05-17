@@ -5,7 +5,9 @@ import 'package:sun_point/ui/screen/account/reset_tpin1.dart';
 import 'package:sun_point/ui/screen/account/reset_tpin2.dart';
 import 'package:sun_point/ui/screen/account/reset_password.dart';
 import 'package:sun_point/ui/screen/account/reset_security_question.dart';
+import 'package:sun_point/ui/screen/account/show_qr.dart';
 import 'package:sun_point/ui/screen/auth/email_verify.dart';
+import 'package:sun_point/ui/screen/auth/forget_password.dart';
 import 'package:sun_point/ui/screen/auth/login.dart';
 import 'package:sun_point/ui/screen/auth/otp.dart';
 import 'package:sun_point/ui/screen/auth/register.dart';
@@ -16,6 +18,7 @@ import 'package:sun_point/ui/screen/auth/setup_succ.dart';
 import 'package:sun_point/ui/screen/auth/setup_tpin.dart';
 import 'package:sun_point/ui/screen/auth/start_up.dart';
 import 'package:sun_point/ui/screen/auth/update_email.dart';
+import 'package:sun_point/ui/screen/auth/update_id_image.dart';
 import 'package:sun_point/ui/screen/home.dart';
 import 'package:sun_point/ui/screen/auth/main.dart';
 
@@ -39,6 +42,9 @@ class Routes {
   static const resetQuestion = '/resetQuestion';
   static const setupSucc = '/setupSucc';
   static const accountInfo = '/accountInfo';
+  static const showQR = '/showQR';
+  static const updateIdImage = '/updateIdImage';
+  static const forgetPassword = '/forgetPassword';
 
   static Route? generate(RouteSettings settings) {
     switch (settings.name) {
@@ -89,6 +95,13 @@ class Routes {
         return MaterialPageRoute(builder: (_) => ResetSecurityQuePage());
       case accountInfo:
         return MaterialPageRoute(builder: (_) => AccountInfoPage());
+      case showQR:
+        return MaterialPageRoute(builder: (_) => const ShowQRPage());
+      case updateIdImage:
+        var args = settings.arguments as UpdateIDImageArgs;
+        return MaterialPageRoute(builder: (_) => UpdateIDImagePage(args: args));
+      case forgetPassword:
+        return MaterialPageRoute(builder: (_) => ForgetPasswordPage());
     }
   }
 }

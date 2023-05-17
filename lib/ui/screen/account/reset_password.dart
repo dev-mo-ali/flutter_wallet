@@ -210,7 +210,8 @@ class ResetPasswordPage extends StatelessWidget {
                       Center(
                         child: TextButton(
                           onPressed: () {
-                            // TODO: do ):
+                            Navigator.of(context)
+                                .pushNamed(Routes.forgetPassword);
                           },
                           child: const Text('Forget Password?').tr(),
                         ),

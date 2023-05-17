@@ -12,7 +12,7 @@ enum _Env {
 }
 
 class Server {
-  static const _Env _env = _Env.local; // set the server env
+  static const _Env _env = _Env.staging; // set the server env
 
   static Future<ServerResponse> send(Function method, String path,
       {Object? body,

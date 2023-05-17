@@ -206,9 +206,8 @@ class OTPPage extends StatelessWidget {
                       child: TextButton(
                         child: const Text('Resend').tr(),
                         onPressed: () {
-                          context
-                              .read<OTPCubit>()
-                              .resend(args.type, args.phone, context.locale);
+                          context.read<OTPCubit>().resend(args.type, args.phone,
+                              context.locale, args.registeredUser);
                         },
                       ),
                     ),

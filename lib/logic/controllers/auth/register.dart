@@ -29,12 +29,15 @@ class RegisterCubit extends Cubit<RegisterState> {
   }
 
   // send request to send otp registeration to the api
-  void register(String number, String uid) async {
-    if (validatePhoneNumber(number) && validateUserID(uid) && !state.loading) {
+  void register(
+      String number, String agent, String userID, String locale) async {
+    if (validatePhoneNumber(number) &&
+        validateUserID(userID) &&
+        !state.loading) {
       emit(state.copyWith(loading: true, phoneError: '', userIdError: ''));
 
-      ServerResponse response =
-          await AuthAPI.checkRegistrationCode(state.countryCode + number);
+      ServerResponse response = await AuthAPI.checkRegistrationCode(
+          state.countryCode + number, agent, userID, locale);
       print(response.response.body);
       if (response.isSuccess) {
         emit(state.copyWith(error: '', done: true, loading: false));

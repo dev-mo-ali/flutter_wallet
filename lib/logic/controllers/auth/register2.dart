@@ -20,7 +20,11 @@ class Register2Cubit extends Cubit<Register2State> {
     FilePickerResult? result = await FilePicker.platform
         .pickFiles(type: FileType.image, allowMultiple: false);
     if (result != null && result.count > 0) {
-      emit(state.copyWith(icImg: result.files.first.path, icImgError: ''));
+      if (result.files.first.size < 5120000) {
+        emit(state.copyWith(icImg: result.files.first.path, icImgError: ''));
+      } else {
+        emit(state.copyWith(icImgError: "Selected image is too large"));
+      }
     }
   }
 

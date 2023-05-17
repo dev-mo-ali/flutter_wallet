@@ -6,10 +6,17 @@ class AuthAPI {
   static const OTP_TYPE_CODE_REGISTER = "REGISTER";
   static const OTP_TYPE_CODE_FORGOT_PASSWORD = "FORGOT_PASSWORD";
 
-  static Future<ServerResponse> checkRegistrationCode(String number) async {
-    ServerResponse response = await Server.send(
-        http.post, 'user/check_registration_code',
-        body: {"username": number}, useToken: false);
+  static Future<ServerResponse> checkRegistrationCode(
+      String number, String agent, String userID, String locale) async {
+    ServerResponse response =
+        await Server.send(http.post, 'user/check_registration_code',
+            body: {
+              "username": number,
+              'reference_number': userID,
+              'referral_code': agent,
+              'locale': locale
+            },
+            useToken: false);
     return response;
   }
 
@@ -162,6 +169,21 @@ class AuthAPI {
         await Server.send(http.post, 'user/update_email', body: {
       'email': email,
     });
+    return response;
+  }
+
+  static Future<ServerResponse> updateIdImage(
+      String username, String idImg, String idNumber, String idType) async {
+    ServerResponse response =
+        await Server.sendFile('user/update_identification_image',
+            fileName: 'identification_image',
+            filePath: idImg,
+            body: {
+              'identification_type': idType,
+              'identification_number': idNumber,
+              'username': username
+            },
+            useToken: false);
     return response;
   }
 }

@@ -6,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sun_point/logic/controllers/auth/login.dart';
 import 'package:sun_point/logic/models/auth/login.dart';
 import 'package:sun_point/ui/screen/auth/setup_tpin.dart';
+import 'package:sun_point/ui/screen/auth/update_id_image.dart';
 import 'package:sun_point/ui/widgets/country_dialog.dart';
 import 'package:sun_point/ui/widgets/erro_dialog.dart';
 import 'package:sun_point/utils/routes.dart';
@@ -14,10 +15,10 @@ import 'package:sun_point/utils/validators.dart';
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
 
-  // TextEditingController phone = TextEditingController(),
-  //     password = TextEditingController();
-  TextEditingController phone = TextEditingController(text: '12345678'),
-      password = TextEditingController(text: '12345678');
+  TextEditingController phone = TextEditingController(),
+      password = TextEditingController();
+  // TextEditingController phone = TextEditingController(text: '12345678'),
+  //     password = TextEditingController(text: '12345678');
   GlobalKey<FormState> _formKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
@@ -55,6 +56,15 @@ class LoginPage extends StatelessWidget {
                         ));
               },
             ),
+            BlocListener<LoginCubit, LoginState>(
+              listenWhen: (previous, current) => current.uploadIDimage,
+              listener: (context, state) {
+                Navigator.of(context).pushNamed(Routes.updateIdImage,
+                    arguments: UpdateIDImageArgs(
+                        username: state.countryCode + phone.text));
+              },
+              child: Container(),
+            )
           ],
           child: Form(
             key: _formKey,

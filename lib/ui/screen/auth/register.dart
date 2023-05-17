@@ -362,10 +362,14 @@ class RegisterPage extends StatelessWidget {
                         if (_formKey.currentState!.validate()) {
                           context.read<RegisterCubit>().register(
                               phone.text,
+                              agent.text,
                               userIdFields
                                   .map((e) => e['controller'].text)
                                   .toList()
-                                  .join());
+                                  .join(),
+                              context.locale.languageCode == 'en'
+                                  ? 'en'
+                                  : 'cn');
                         }
                       },
                       child: const Text("Register").tr());

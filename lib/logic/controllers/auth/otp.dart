@@ -19,12 +19,13 @@ class OTPCubit extends Cubit<OTPState> {
   }
 
 // resend the sms
-  void resend(String type, String number, Locale local) async {
+  void resend(String type, String number, Locale local, Map? extra) async {
     emit(state.copyWith(resending: true));
     ServerResponse? response;
     // resend code depending on the type
     if (type == AuthAPI.OTP_TYPE_CODE_REGISTER) {
-      response = await AuthAPI.checkRegistrationCode(number);
+      response = await AuthAPI.checkRegistrationCode(number, extra!['agent'],
+          extra['userID'], local.languageCode == 'en' ? 'en' : 'cn');
     } else if (type == AuthAPI.OTP_TYPE_CODE_FORGOT_PASSWORD) {
       response = await AuthAPI.sendForgetOtp(
           number, local.languageCode == 'en' ? 'en' : 'cn');

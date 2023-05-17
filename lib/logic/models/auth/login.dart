@@ -6,6 +6,7 @@ class LoginState {
   String phoneError;
   bool? goSetup;
   bool? goEmailVerify;
+  bool uploadIDimage;
   LoginState({
     this.loading = false,
     this.done = false,
@@ -14,6 +15,7 @@ class LoginState {
     this.phoneError = '',
     this.goSetup,
     this.goEmailVerify,
+    this.uploadIDimage = false,
   });
 
   LoginState copyWith({
@@ -24,6 +26,7 @@ class LoginState {
     String? phoneError,
     bool? goSetup,
     bool? goEmailVerify,
+    bool? uploadIDimage,
   }) {
     return LoginState(
       loading: loading ?? this.loading,
@@ -33,6 +36,7 @@ class LoginState {
       phoneError: phoneError ?? this.phoneError,
       goSetup: goSetup ?? this.goSetup,
       goEmailVerify: goEmailVerify ?? this.goEmailVerify,
+      uploadIDimage: uploadIDimage ?? this.uploadIDimage,
     );
   }
 }

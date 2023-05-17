@@ -89,7 +89,30 @@
     "INVALID_CREDENTIAL":"Invalid Credential",
     "resetPassSucc":"Congratulations! Your request to update your password is successful!",
     "resetTPINSucc":"Congratulations! Your request to update your transaction PIN is successful!",
-    "resetQueSucc":"Congratulations! Your request to update your security question is successful!"
-
-
+    "resetQueSucc":"Congratulations! Your request to update your security question is successful!",
+    "INVALID_USER":"User not exists",
+    "INVALID_AGENT":"Agent not exists",
+    "INVALID_REFERENCE":"Reference not exists",
+    "My QR":"My QR",
+    "REGISTRATION_REJECTED":"Registration rejected. Please contact CS for more information.",
+    "REGISTRATION_IDENTIFICATION_REQUIRED":"Identification required. Please contact CS to upload your identification.",
+    "AUTHENTICATION_FAILED":"Invalid username or password",
+    "LOCKED_ACCOUNT":"Your account is locked. Please Contact CS to unlock account",
+    "INVALID_CREDENTIALS":"Invalid Credentials",
+    "Max size: 5MB":"Max size: 5MB",
+    "IC":"IC",
+    "Birthday":"Birthday",
+    "Passport":"Passport",
+    "Selected image is too large":"Selected image is too large",
+    "updateIDImageSum":"Identification required. Please upload your identification.",
+    "Update Identification Image":"Update Identification Image",
+    "UPDATE IDENTIFICATION IMAGE":"UPDATE IDENTIFICATION IMAGE",
+    "Forget Password":"Forget Password",
+    "FORGET PASSWORD":"FORGET PASSWORD",
+    "forgetPassSum":"Please contact Customers Service to help you in password reset. ",
+    "Tel:":"Tel: {}",
+    "Email:":"Email: {}",
+    "plzSelImg":"Please Select Image.",
+    "Update":"Update",
+    "OK":"OK"
 }

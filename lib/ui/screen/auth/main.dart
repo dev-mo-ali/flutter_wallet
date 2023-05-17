@@ -136,7 +136,9 @@ class _MainAuthPageState extends State<MainAuthPage> {
           height: 6,
         ),
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pushNamed(Routes.forgetPassword);
+          },
           child: const Text(
             'Forget Password',
           ),

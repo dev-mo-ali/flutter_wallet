@@ -32,7 +32,9 @@ class LoginCubit extends Cubit<LoginState> {
       // send the request
       emit(state.copyWith(loading: true));
       String imei = await FlutterUdid.udid;
-      print(imei);
+      // await Future.delayed(Duration(seconds: 2));
+      // emit(state.copyWith(loading: false, error: '', uploadIDimage: true));
+
       ServerResponse response =
           await AuthAPI.login(state.countryCode + number, password, imei);
       if (response.isSuccess) {
@@ -51,8 +53,12 @@ class LoginCubit extends Cubit<LoginState> {
           goEmailVerify: response.data['email_verified_at'] == null,
         ));
       } else {
-        emit(state.copyWith(loading: false, error: response.code.code));
-        emit(state.copyWith(error: ''));
+        if (response.code.code == 'REGISTRATION_IDENTIFICATION_REQUIRED') {
+          emit(state.copyWith(loading: false, error: '', uploadIDimage: true));
+        } else {
+          emit(state.copyWith(loading: false, error: response.code.code));
+          emit(state.copyWith(error: ''));
+        }
       }
     }
   }

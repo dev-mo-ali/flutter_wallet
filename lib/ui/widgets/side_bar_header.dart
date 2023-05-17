@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:sun_point/logic/controllers/drawer.dart';
 import 'package:sun_point/utils/ui/file_path.dart';
 
 class SideBarHeader extends StatelessWidget {
@@ -37,10 +39,13 @@ class SideBarHeader extends StatelessWidget {
               ],
             ),
           ),
-          SvgPicture.asset(
-            menu,
-            width: 16,
-            color: Theme.of(context).iconTheme.color,
+          IconButton(
+            onPressed: () => context.read<DrawerCubit>().openDrawer(),
+            icon: SvgPicture.asset(
+              menu,
+              width: 16,
+              color: Theme.of(context).iconTheme.color,
+            ),
           ),
         ],
       ),
