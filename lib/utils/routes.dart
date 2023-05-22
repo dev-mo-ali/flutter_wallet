@@ -6,8 +6,11 @@ import 'package:sun_point/ui/screen/account/reset_tpin2.dart';
 import 'package:sun_point/ui/screen/account/reset_password.dart';
 import 'package:sun_point/ui/screen/account/reset_security_question.dart';
 import 'package:sun_point/ui/screen/account/show_qr.dart';
+import 'package:sun_point/ui/screen/account/unlock_phone.dart';
+import 'package:sun_point/ui/screen/account/unlock_succ.dart';
 import 'package:sun_point/ui/screen/auth/email_verify.dart';
-import 'package:sun_point/ui/screen/auth/forget_password.dart';
+import 'package:sun_point/ui/screen/auth/forget_password1.dart';
+import 'package:sun_point/ui/screen/auth/forget_password2.dart';
 import 'package:sun_point/ui/screen/auth/login.dart';
 import 'package:sun_point/ui/screen/auth/otp.dart';
 import 'package:sun_point/ui/screen/auth/register.dart';
@@ -19,8 +22,13 @@ import 'package:sun_point/ui/screen/auth/setup_tpin.dart';
 import 'package:sun_point/ui/screen/auth/start_up.dart';
 import 'package:sun_point/ui/screen/auth/update_email.dart';
 import 'package:sun_point/ui/screen/auth/update_id_image.dart';
+import 'package:sun_point/ui/screen/auth/upgrade.dart';
 import 'package:sun_point/ui/screen/home.dart';
 import 'package:sun_point/ui/screen/auth/main.dart';
+import 'package:sun_point/ui/screen/profile/profile.dart';
+import 'package:sun_point/ui/screen/profile/update_phone1.dart';
+import 'package:sun_point/ui/screen/profile/update_phone2.dart';
+import 'package:sun_point/ui/screen/profile/update_phone3.dart';
 
 class Routes {
   static const startUp = '/';
@@ -41,10 +49,18 @@ class Routes {
   static const setupQuestion = '/setupQuestion';
   static const resetQuestion = '/resetQuestion';
   static const setupSucc = '/setupSucc';
+  static const profile = '/profile';
   static const accountInfo = '/accountInfo';
   static const showQR = '/showQR';
   static const updateIdImage = '/updateIdImage';
   static const forgetPassword = '/forgetPassword';
+  static const forgetPassword2 = '/forgetPassword2';
+  static const upgrade = '/upgrade';
+  static const unlockPhone = '/unlockPhone';
+  static const unlockPhoneSucc = '/unlockPhoneSucc';
+  static const updatePhone1 = '/updatePhone1';
+  static const updatePhone2 = '/updatePhone2';
+  static const updatePhone3 = '/updatePhone3';
 
   static Route? generate(RouteSettings settings) {
     switch (settings.name) {
@@ -93,6 +109,8 @@ class Routes {
         return MaterialPageRoute(builder: (_) => SecurityQuePage(args: args));
       case resetQuestion:
         return MaterialPageRoute(builder: (_) => ResetSecurityQuePage());
+      case profile:
+        return MaterialPageRoute(builder: (_) => const ProfilePage());
       case accountInfo:
         return MaterialPageRoute(builder: (_) => AccountInfoPage());
       case showQR:
@@ -101,7 +119,33 @@ class Routes {
         var args = settings.arguments as UpdateIDImageArgs;
         return MaterialPageRoute(builder: (_) => UpdateIDImagePage(args: args));
       case forgetPassword:
-        return MaterialPageRoute(builder: (_) => ForgetPasswordPage());
+        return MaterialPageRoute(builder: (_) => ForgetPassword1Page());
+      case forgetPassword2:
+        var args = settings.arguments as ForgetPassword2Args;
+
+        return MaterialPageRoute(
+            builder: (_) => ForgetPassword2Page(args: args));
+      case upgrade:
+        return MaterialPageRoute(builder: (_) => const UpgradePage());
+      case unlockPhone:
+        return MaterialPageRoute(builder: (_) => const UnlockPhonePage());
+      case unlockPhoneSucc:
+        return MaterialPageRoute(builder: (_) => const UnlockSuccPage());
+      case updatePhone1:
+        return MaterialPageRoute(builder: (_) => UpdatePhone1Page());
+      case updatePhone2:
+        var args = settings.arguments as UpdatePhone2Args;
+        return MaterialPageRoute(
+            builder: (_) => UpdatePhone2Page(
+                  args: args,
+                ));
+      case updatePhone3:
+        var args = settings.arguments as UpdatePhone3Args;
+        return MaterialPageRoute(
+            builder: (_) => UpdatePhone3Page(
+                  args: args,
+                ));
     }
+    return null;
   }
 }

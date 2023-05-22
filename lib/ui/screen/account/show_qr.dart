@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:sun_point/server/server.dart';
 import 'package:sun_point/utils/auth.dart';
-import 'package:sun_point/utils/ui/file_path.dart';
 
 class ShowQRPage extends StatelessWidget {
   const ShowQRPage({super.key});
@@ -39,7 +38,7 @@ class ShowQRPage extends StatelessWidget {
                                   child: Container(
                                     width: 60,
                                     height: 60,
-                                    decoration: BoxDecoration(),
+                                    decoration: const BoxDecoration(),
                                     child: Image(
                                       image: snapshot.data!.avatar == null
                                           ? const AssetImage(

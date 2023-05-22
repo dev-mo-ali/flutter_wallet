@@ -4,16 +4,18 @@ String? isNotEmpty(String? value) {
   if (value == null || value.isEmpty) {
     return 'fieldReq'.tr();
   }
+  return null;
 }
 
 String? phoneNumberValidator(String? value) {
   if (value == null || value.isEmpty) {
-    return 'fieldReq'.tr();
+    return 'numReq'.tr();
   }
   RegExp regExp = RegExp(r'^\d{8,}$');
   if (!regExp.hasMatch(value)) {
     return 'invalidNum'.tr();
   }
+  return null;
 }
 
 String? amountValidator(String? value) {
@@ -24,4 +26,5 @@ String? amountValidator(String? value) {
   if (!regEx.hasMatch(value)) {
     return 'amountError'.tr();
   }
+  return null;
 }

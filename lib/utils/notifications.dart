@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:sun_point/utils/auth.dart';
@@ -59,15 +58,5 @@ class NotificationHelper {
       text,
       notificationDetails,
     );
-  }
-}
-
-@pragma('vm:entry-point')
-Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  return;
-  NotificationHelper.setup();
-  if (message.notification != null) {
-    NotificationHelper.add(
-        message.notification!.title!, message.notification!.body!);
   }
 }

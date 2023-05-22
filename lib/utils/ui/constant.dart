@@ -224,7 +224,6 @@ ThemeData darkTheme() => ThemeData(
         color: Color(0xFF212330),
         foregroundColor: Color(0xff7b7f9e),
       ),
-      backgroundColor: AppColors.backgroundDark,
       scaffoldBackgroundColor: AppColors.backgroundDark,
       radioTheme: const RadioThemeData(
         overlayColor: MaterialStatePropertyAll(Color(0xff7b7f9e)),
@@ -289,10 +288,9 @@ ThemeData darkTheme() => ThemeData(
           color: Colors.white,
           fontWeight: FontWeight.w500,
         ),
-      ),
-      colorScheme: ColorScheme.fromSwatch().copyWith(
+      ), colorScheme: ColorScheme.fromSwatch().copyWith(
           brightness: Brightness.dark,
           primary: const Color(0xff7b7f9e),
           secondary: AppColors.backgroundDark,
-          outline: Colors.grey.shade300),
+          outline: Colors.grey.shade300).copyWith(background: AppColors.backgroundDark),
     );

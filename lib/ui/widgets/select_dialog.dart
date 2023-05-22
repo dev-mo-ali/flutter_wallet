@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SelectDialog extends StatelessWidget {
-  List<Map> items;
+  final List<Map> items;
   SelectDialog({super.key, required this.items});
 
   @override

@@ -1,15 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sun_point/logic/controllers/auth/email_verify.dart';
 import 'package:sun_point/logic/models/auth/email_verify.dart';
 import 'package:sun_point/ui/screen/auth/setup_tpin.dart';
 
-import 'package:sun_point/ui/widgets/bottom_bar.dart';
-import 'package:sun_point/ui/widgets/country_dialog.dart';
 import 'package:sun_point/ui/widgets/erro_dialog.dart';
 import 'package:sun_point/utils/auth.dart';
 import 'package:sun_point/utils/routes.dart';
@@ -17,11 +12,11 @@ import 'package:sun_point/utils/validators.dart';
 
 class EmailVerifyPage extends StatelessWidget {
   EmailVerifyPage({
-    Key? key,
+    super.key,
   });
 
-  GlobalKey<FormState> _formKey = GlobalKey();
-  TextEditingController code = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey();
+  final TextEditingController code = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -36,7 +31,7 @@ class EmailVerifyPage extends StatelessWidget {
                   Navigator.of(context).pushNamedAndRemoveUntil(
                       Routes.mainAuth, (route) => false);
                 },
-                icon: Icon(Icons.logout_outlined)),
+                icon: const Icon(Icons.logout_outlined)),
           ],
         ),
         body: MultiBlocListener(

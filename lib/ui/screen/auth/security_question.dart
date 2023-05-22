@@ -19,13 +19,13 @@ class SecurityQueArgs {
 }
 
 class SecurityQuePage extends StatelessWidget {
-  SecurityQueArgs args;
+  final SecurityQueArgs args;
 
   SecurityQuePage({super.key, required this.args});
 
-  TextEditingController answer = TextEditingController();
+  final TextEditingController answer = TextEditingController();
   // TextEditingController answer = TextEditingController(text: 'test');
-  GlobalKey<FormState> _formKey = GlobalKey();
+  final GlobalKey<FormState> _formKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return BlocProvider(

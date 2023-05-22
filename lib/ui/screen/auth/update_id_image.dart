@@ -6,11 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:sun_point/logic/controllers/auth/updata_id_image.dart';
-import 'package:sun_point/logic/controllers/auth/update_email.dart';
-import 'package:sun_point/logic/models/auth/update_email.dart';
 import 'package:sun_point/logic/models/auth/update_id_image.dart';
 import 'package:sun_point/ui/widgets/erro_dialog.dart';
-import 'package:sun_point/utils/auth.dart';
 import 'package:sun_point/utils/routes.dart';
 import 'package:sun_point/utils/validators.dart';
 
@@ -22,13 +19,13 @@ class UpdateIDImageArgs {
 }
 
 class UpdateIDImagePage extends StatelessWidget {
-  UpdateIDImageArgs args;
+  final UpdateIDImageArgs args;
   UpdateIDImagePage({
     Key? key,
     required this.args,
   }) : super(key: key);
-  TextEditingController idNumber = TextEditingController();
-  GlobalKey<FormState> _formKey = GlobalKey();
+  final TextEditingController idNumber = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return BlocProvider(

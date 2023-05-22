@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 class OTPState {
   static const timeOfResend = 300;

@@ -14,9 +14,9 @@ import 'package:sun_point/utils/validators.dart';
 class ResetSecurityQuePage extends StatelessWidget {
   ResetSecurityQuePage({super.key});
 
-  TextEditingController answer = TextEditingController();
-  // TextEditingController answer = TextEditingController(text: 'test');
-  GlobalKey<FormState> _formKey = GlobalKey();
+final   TextEditingController answer = TextEditingController();
+  // final TextEditingController answer = TextEditingController(text: 'test');
+  final GlobalKey<FormState> _formKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return BlocProvider(

@@ -23,7 +23,7 @@ class AccountInfoCubit extends Cubit<AccountInfoState> {
 
     if (result != null && result.count > 0) {
       // if file less then 1 mb
-      if (await result.files.first.size < 1024000) {
+      if (result.files.first.size < 1024000) {
         emit(state.copyWith(avatarLoading: true));
         ServerResponse response =
             await AccountAPI.updateAvatar(result.files.first.path!);

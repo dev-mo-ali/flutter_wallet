@@ -15,11 +15,11 @@ import 'package:sun_point/utils/validators.dart';
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
 
-  TextEditingController phone = TextEditingController(),
+  final TextEditingController phone = TextEditingController(),
       password = TextEditingController();
-  // TextEditingController phone = TextEditingController(text: '12345678'),
+  // final TextEditingController phone = TextEditingController(text: '12345678'),
   //     password = TextEditingController(text: '12345678');
-  GlobalKey<FormState> _formKey = GlobalKey();
+  final GlobalKey<FormState> _formKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -117,7 +117,7 @@ class LoginPage extends StatelessWidget {
                             onTap: () async {
                               String? code = await showDialog(
                                   context: context,
-                                  builder: (_) => CountryDialog());
+                                  builder: (_) => const CountryDialog());
                               if (code != null) {
                                 context.read<LoginCubit>().setCode(code);
                               }

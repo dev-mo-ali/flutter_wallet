@@ -13,9 +13,9 @@ import 'package:sun_point/utils/validators.dart';
 
 class ResetTPIN1Page extends StatelessWidget {
   ResetTPIN1Page({super.key});
-  TextEditingController password = TextEditingController();
+  final TextEditingController password = TextEditingController();
 
-  GlobalKey<FormState> _key = GlobalKey();
+  final GlobalKey<FormState> _key = GlobalKey();
 
   @override
   Widget build(BuildContext context) {

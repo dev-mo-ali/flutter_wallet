@@ -13,8 +13,12 @@ class BottomBar extends StatelessWidget {
 
   final List<Map> _items = const [
     {'label': "Home", 'icon': Icons.home, 'route': Routes.home},
-    {'label': "Account", 'icon': FontAwesomeIcons.wallet, 'route': ''},
-    {'label': "Profile", 'icon': Icons.person, 'route': Routes.account},
+    {
+      'label': "Account",
+      'icon': FontAwesomeIcons.wallet,
+      'route': Routes.account
+    },
+    {'label': "Profile", 'icon': Icons.person, 'route': Routes.profile},
     // {'label': "", 'icon': null, 'route':''},
   ];
 

@@ -69,4 +69,26 @@ class AccountAPI {
     });
     return response;
   }
+
+  static Future<ServerResponse> unlockPhone() async {
+    ServerResponse response =
+        await Server.send(http.post, 'user/change_phone_device_request');
+    return response;
+  }
+
+  static Future<ServerResponse> sendResetNumberOTP(
+      String phone, String password, String locale) async {
+    ServerResponse response = await Server.send(
+        http.post, 'user/reset_mobile_number_otp_request',
+        body: {"new_username": phone, 'password': password, "locale": locale});
+    return response;
+  }
+
+  static Future<ServerResponse> resetNumber(String otp) async {
+    ServerResponse response =
+        await Server.send(http.post, 'user/reset_mobile_number', body: {
+      "otp": otp,
+    });
+    return response;
+  }
 }

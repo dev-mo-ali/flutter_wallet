@@ -3,14 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:sun_point/logic/controllers/auth/otp.dart';
 import 'package:sun_point/logic/models/auth/otp.dart';
 import 'package:sun_point/logic/providers/auth.dart';
 import 'package:sun_point/ui/screen/auth/register2.dart';
-import 'package:sun_point/ui/widgets/bottom_bar.dart';
-import 'package:sun_point/ui/widgets/country_dialog.dart';
 import 'package:sun_point/ui/widgets/erro_dialog.dart';
 import 'package:sun_point/utils/routes.dart';
 
@@ -25,11 +22,12 @@ class OTPArgs {
   });
 }
 
+// ignore: must_be_immutable
 class OTPPage extends StatelessWidget {
   List otpFields = [];
-  OTPArgs args;
+  final OTPArgs args;
   OTPPage({
-    Key? key,
+    super.key,
     required this.args,
   }) {
     otpFields = List.generate(

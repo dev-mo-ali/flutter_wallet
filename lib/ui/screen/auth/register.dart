@@ -7,25 +7,24 @@ import 'package:sun_point/logic/controllers/auth/register.dart';
 import 'package:sun_point/logic/models/auth/register.dart';
 import 'package:sun_point/logic/providers/auth.dart';
 import 'package:sun_point/ui/screen/auth/otp.dart';
-import 'package:sun_point/ui/widgets/bottom_bar.dart';
 import 'package:sun_point/ui/widgets/country_dialog.dart';
 import 'package:sun_point/ui/widgets/erro_dialog.dart';
 import 'package:sun_point/utils/routes.dart';
-import 'package:sun_point/utils/validators.dart';
 
+// ignore: must_be_immutable
 class RegisterPage extends StatelessWidget {
   List userIdFields = [];
-  TextEditingController phone = TextEditingController(),
+  final TextEditingController phone = TextEditingController(),
       agent = TextEditingController(),
       password = TextEditingController(),
       passConf = TextEditingController();
 
-  // TextEditingController phone = TextEditingController(text: '123456789'),
+  // final TextEditingController phone = TextEditingController(text: '123456789'),
   //     agent = TextEditingController(text: "AA"),
   //     password = TextEditingController(text: '12345678'),
   //     passConf = TextEditingController(text: '12345678');
 
-  GlobalKey<FormState> _formKey = GlobalKey();
+  final GlobalKey<FormState> _formKey = GlobalKey();
 
   RegisterPage({super.key}) {
     userIdFields = List.generate(
@@ -45,6 +44,7 @@ class RegisterPage extends StatelessWidget {
     if (value.length < 8) {
       return 'passErr'.tr();
     }
+    return null;
   }
 
   String? passConfValidator(String? value) {
@@ -58,6 +58,7 @@ class RegisterPage extends StatelessWidget {
     if (value.length < 8) {
       return 'passErr'.tr();
     }
+    return null;
   }
 
   String? agentValidator(String? value) {
@@ -68,6 +69,7 @@ class RegisterPage extends StatelessWidget {
     if (!regEx.hasMatch(value)) {
       return 'agentErr'.tr();
     }
+    return null;
   }
 
   @override
@@ -158,7 +160,7 @@ class RegisterPage extends StatelessWidget {
                             onTap: () async {
                               String? code = await showDialog(
                                   context: context,
-                                  builder: (_) => CountryDialog());
+                                  builder: (_) => const CountryDialog());
                               if (code != null) {
                                 context
                                     .read<RegisterCubit>()

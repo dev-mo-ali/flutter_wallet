@@ -1,11 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_udid/flutter_udid.dart';
 
-import 'package:sun_point/logic/providers/account.dart';
 import 'package:sun_point/logic/providers/auth.dart';
 import 'package:sun_point/server/response.dart';
-import 'package:sun_point/server/server.dart';
 import 'package:sun_point/utils/auth.dart';
 import 'package:sun_point/logic/models/auth/login.dart';
 import 'package:sun_point/utils/validators.dart';

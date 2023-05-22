@@ -17,6 +17,7 @@ class UpdateEmailCubit extends Cubit<UpdateEmailState> {
         emit(state.copyWith(loading: false, done: true, error: ''));
       } else {
         emit(state.copyWith(loading: false, error: response.code.code));
+        emit(state.copyWith(error: ''));
       }
     }
   }

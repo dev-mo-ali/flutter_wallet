@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class CountryDialog extends StatelessWidget {
-  CountryDialog({super.key});
+  const CountryDialog({super.key});
   Future<List> readCountries() async {
     return jsonDecode(await rootBundle.loadString('assets/country_codes.json'));
   }

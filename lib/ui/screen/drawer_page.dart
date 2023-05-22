@@ -1,21 +1,24 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:sun_point/logic/controllers/drawer.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
-import 'package:sun_point/ui/screen/home.dart';
-import 'package:sun_point/ui/widgets/side_bar_header.dart';
+import 'package:sun_point/logic/controllers/drawer.dart';
+import 'package:sun_point/ui/widgets/yes_no_dialog.dart';
 import 'package:sun_point/utils/auth.dart';
 import 'package:sun_point/utils/routes.dart';
 import 'package:sun_point/utils/ui/file_path.dart';
 
 class DrawerPage extends StatefulWidget {
-  Widget child;
-  Widget? bottomBar;
+  final Widget child;
+  final Widget? bottomBar;
+  final String current;
   DrawerPage({
     Key? key,
     required this.child,
     this.bottomBar,
+    required this.current,
   }) : super(key: key);
 
   @override
@@ -63,8 +66,8 @@ class _DrawerPageState extends State<DrawerPage> with TickerProviderStateMixin {
                             return Container(
                               height: 100,
                               width: MediaQuery.of(context).size.width * 0.6,
-                              decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.only(
+                              decoration: const BoxDecoration(
+                                borderRadius: BorderRadius.only(
                                     bottomRight: Radius.circular(60)),
                               ),
                               child: Center(
@@ -78,8 +81,9 @@ class _DrawerPageState extends State<DrawerPage> with TickerProviderStateMixin {
                                               color: const Color(0xffD8D9E4))),
                                       child: CircleAvatar(
                                         radius: 22.0,
-                                        backgroundColor:
-                                            Theme.of(context).backgroundColor,
+                                        backgroundColor: Theme.of(context)
+                                            .colorScheme
+                                            .background,
                                         child: ClipRRect(
                                           child: SvgPicture.asset(avatorOne),
                                           borderRadius:
@@ -121,13 +125,13 @@ class _DrawerPageState extends State<DrawerPage> with TickerProviderStateMixin {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        navigatorTitle("Home", true),
-                        navigatorTitle("Profile", false),
-                        navigatorTitle("Accounts", false),
-                        navigatorTitle("Transactions", false),
-                        navigatorTitle("Stats", false),
-                        navigatorTitle("Settings", false),
-                        navigatorTitle("Help", false),
+                        navigatorTitle("Home", Routes.home),
+                        navigatorTitle("Profile", Routes.profile),
+                        navigatorTitle("Account", Routes.account),
+                        navigatorTitle("Transactions", ""),
+                        navigatorTitle("Stats", ""),
+                        navigatorTitle("Settings", ""),
+                        navigatorTitle("Help", ""),
                       ],
                     ),
                   ),
@@ -135,9 +139,15 @@ class _DrawerPageState extends State<DrawerPage> with TickerProviderStateMixin {
                     padding: const EdgeInsets.all(20),
                     child: InkWell(
                       onTap: () async {
-                        await User.logout();
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                            Routes.mainAuth, (route) => false);
+                        bool? res = await showDialog(
+                            context: context,
+                            builder: (_) => const YesNoDialog(
+                                title: 'Logout', text: 'logoutAsk'));
+                        if (res == true) {
+                          await User.logout();
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              Routes.mainAuth, (route) => false);
+                        }
                       },
                       child: Row(
                         children: [
@@ -158,14 +168,21 @@ class _DrawerPageState extends State<DrawerPage> with TickerProviderStateMixin {
                       ),
                     ),
                   ),
-                  Container(
-                    alignment: Alignment.bottomLeft,
-                    padding: const EdgeInsets.all(20),
-                    child: Text(
-                      "Ver 2.0.1",
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                  )
+                  FutureBuilder(
+                      future: PackageInfo.fromPlatform(),
+                      builder: (context, snap) {
+                        if (!snap.hasData) {
+                          return const SizedBox();
+                        }
+                        return Container(
+                          alignment: Alignment.bottomLeft,
+                          padding: const EdgeInsets.all(20),
+                          child: Text(
+                            "Ver",
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ).tr(args: [snap.data!.version]),
+                        );
+                      })
                 ],
               ),
               AnimatedPositioned(
@@ -235,31 +252,37 @@ class _DrawerPageState extends State<DrawerPage> with TickerProviderStateMixin {
     );
   }
 
-  Row navigatorTitle(String name, bool isSelected) {
-    return Row(
-      children: [
-        (isSelected)
-            ? Container(
-                width: 5,
-                height: 40,
-                color: const Color(0xffffac30),
-              )
-            : const SizedBox(
-                width: 5,
-                height: 40,
-              ),
-        const SizedBox(
-          width: 10,
-          height: 45,
-        ),
-        Text(
-          name,
-          style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                fontSize: 16,
-                fontWeight: (isSelected) ? FontWeight.w700 : FontWeight.w400,
-              ),
-        ),
-      ],
+  Widget navigatorTitle(String name, String route) {
+    return InkWell(
+      onTap: () => Navigator.of(context)
+          .pushNamedAndRemoveUntil(route, (route) => false),
+      child: Row(
+        children: [
+          (widget.current == route)
+              ? Container(
+                  width: 5,
+                  height: 40,
+                  color: const Color(0xffffac30),
+                )
+              : const SizedBox(
+                  width: 5,
+                  height: 40,
+                ),
+          const SizedBox(
+            width: 10,
+            height: 45,
+          ),
+          Text(
+            name,
+            style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                  fontSize: 16,
+                  fontWeight: (widget.current == route)
+                      ? FontWeight.w700
+                      : FontWeight.w400,
+                ),
+          ),
+        ],
+      ),
     );
   }
 

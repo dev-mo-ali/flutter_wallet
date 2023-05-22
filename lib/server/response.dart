@@ -1,7 +1,5 @@
 import 'dart:convert' show jsonDecode, utf8;
 
-import 'package:http/http.dart' as http;
-import 'package:dio/dio.dart' as dio;
 
 class ServerResponse {
   late final ResponseCode code;

@@ -32,7 +32,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   device_info_plus: ^9.0.0
   dio: ^5.1.1
-  easy_localization: ^3.0.1
+  easy_localization: ^3.0.2
   file_picker: ^5.2.11
   firebase_core: ^2.10.0
   firebase_messaging: ^14.4.1
@@ -43,9 +43,10 @@ dependencies:
   flutter_svg: ^1.0.0
   flutter_udid: ^2.0.1
   font_awesome_flutter: ^10.4.0
-  google_fonts: ^2.2.0
+  google_fonts: ^4.0.4
   http: ^0.13.5
-  intl: ^0.17.0
+
+  intl: ^0.18.0
   package_info_plus: ^3.1.1
   qr_flutter: ^4.0.0
   shared_preferences: ^2.1.0

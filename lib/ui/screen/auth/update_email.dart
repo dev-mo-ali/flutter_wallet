@@ -10,8 +10,8 @@ import 'package:sun_point/utils/validators.dart';
 
 class UpdateEmailPage extends StatelessWidget {
   UpdateEmailPage({super.key});
-  TextEditingController email = TextEditingController();
-  GlobalKey<FormState> _formKey = GlobalKey();
+  final TextEditingController email = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return BlocProvider(

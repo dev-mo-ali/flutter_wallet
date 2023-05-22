@@ -3,13 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sun_point/logic/controllers/auth/setup_tpin.dart';
 import 'package:sun_point/logic/models/auth/setup_tpin.dart';
 import 'package:sun_point/ui/screen/auth/security_question.dart';
 
-import 'package:sun_point/ui/widgets/bottom_bar.dart';
-import 'package:sun_point/ui/widgets/country_dialog.dart';
 import 'package:sun_point/ui/widgets/erro_dialog.dart';
 import 'package:sun_point/utils/routes.dart';
 
@@ -21,11 +18,12 @@ class SetupTPINArgs {
   });
 }
 
+// ignore: must_be_immutable
 class SetupTPINPage extends StatelessWidget {
-  SetupTPINArgs args;
+  final SetupTPINArgs args;
   List tpinFields = [];
   SetupTPINPage({
-    Key? key,
+    super.key,
     required this.args,
   }) {
     tpinFields = List.generate(

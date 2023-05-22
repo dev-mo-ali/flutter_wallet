@@ -26,6 +26,7 @@ class _HomePageState extends State<HomePage> {
     return BlocProvider(
       create: (context) => HomeCubit(),
       child: DrawerPage(
+        current: Routes.home,
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -163,7 +164,7 @@ class _HomePageState extends State<HomePage> {
                                               "Discover More",
                                               style: TextStyle(fontSize: 14),
                                             ).tr()),
-                                        Icon(
+                                        const Icon(
                                           Icons.arrow_forward_ios,
                                           size: 16,
                                         )

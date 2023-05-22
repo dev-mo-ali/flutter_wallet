@@ -12,8 +12,8 @@ import 'package:sun_point/utils/validators.dart';
 
 class AccountInfoPage extends StatelessWidget {
   AccountInfoPage({super.key});
-  TextEditingController name = TextEditingController();
-  GlobalKey<FormState> _formKey = GlobalKey();
+  final TextEditingController name = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -75,7 +75,9 @@ class AccountInfoPage extends StatelessWidget {
                                       : Image.network(
                                           Server.getAbsluteUrl(
                                               state.user!.avatar!),
-                                          headers: {'Connection': 'Keep-Alive'},
+                                          headers: const {
+                                            'Connection': 'Keep-Alive'
+                                          },
                                           fit: BoxFit.contain,
                                         ),
                                 ),
@@ -143,7 +145,7 @@ class AccountInfoPage extends StatelessWidget {
                           context.read<AccountInfoCubit>().submit(name.text);
                         }
                       },
-                      child: Text('Update').tr())
+                      child: const Text('Update').tr())
                 ],
               );
             },

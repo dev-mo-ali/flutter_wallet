@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:sun_point/ui/screen/drawer_page.dart';
-import 'package:sun_point/ui/screen/home.dart';
 import 'package:sun_point/utils/routes.dart';
-import 'package:sun_point/utils/ui/constant.dart';
 import 'package:sun_point/utils/ui/file_path.dart';
 import 'package:intl/intl.dart';
 

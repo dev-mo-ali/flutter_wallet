@@ -43,7 +43,7 @@ class SetupSuccPage extends StatelessWidget {
             ),
             Center(
               child: Text(
-                'SetupSuccPage',
+                'setupSuccSum',
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.labelLarge,
               ).tr(),

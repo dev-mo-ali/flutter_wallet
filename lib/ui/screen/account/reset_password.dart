@@ -12,7 +12,7 @@ import 'package:sun_point/utils/validators.dart';
 
 class ResetPasswordPage extends StatelessWidget {
   ResetPasswordPage({super.key});
-  TextEditingController password = TextEditingController(),
+ final  TextEditingController password = TextEditingController(),
       newPassword = TextEditingController(),
       confPassword = TextEditingController();
 
@@ -24,6 +24,7 @@ class ResetPasswordPage extends StatelessWidget {
     if (value.length < 8) {
       return 'passErr'.tr();
     }
+    return null;
   }
 
   String? passConfValidator(String? value) {
@@ -37,9 +38,10 @@ class ResetPasswordPage extends StatelessWidget {
     if (value.length < 8) {
       return 'passErr'.tr();
     }
+    return null;
   }
 
-  GlobalKey<FormState> _key = GlobalKey();
+  final GlobalKey<FormState> _key = GlobalKey();
 
   @override
   Widget build(BuildContext context) {

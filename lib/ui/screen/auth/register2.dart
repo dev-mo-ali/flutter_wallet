@@ -9,7 +9,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:sun_point/logic/controllers/auth/register2.dart';
 import 'package:sun_point/logic/models/auth/register2.dart';
-import 'package:sun_point/ui/widgets/bottom_bar.dart';
 import 'package:sun_point/ui/widgets/country_dialog.dart';
 import 'package:sun_point/ui/widgets/erro_dialog.dart';
 import 'package:sun_point/utils/routes.dart';
@@ -26,14 +25,14 @@ class Register2Args {
 }
 
 class Register2Page extends StatelessWidget {
-  Register2Args args;
-  DateFormat format = DateFormat('yyyy-MM-dd');
+  final Register2Args args;
+  final DateFormat format = DateFormat('yyyy-MM-dd');
   Register2Page({
     Key? key,
     required this.args,
   }) : super(key: key);
 
-  TextEditingController name = TextEditingController(),
+  final TextEditingController name = TextEditingController(),
       email = TextEditingController(),
       idNumber = TextEditingController(),
       emergencyName = TextEditingController(),
@@ -46,7 +45,7 @@ class Register2Page extends StatelessWidget {
   //     emergencyName = TextEditingController(text: 'mohamed'),
   //     emergencyPhone = TextEditingController(text: '123456789'),
   //     emergencyRelationship = TextEditingController(text: 'co-worker');
-  GlobalKey<FormState> _formKey = GlobalKey();
+  final GlobalKey<FormState> _formKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -422,7 +421,7 @@ class Register2Page extends StatelessWidget {
                             onTap: () async {
                               String? code = await showDialog(
                                   context: context,
-                                  builder: (_) => CountryDialog());
+                                  builder: (_) => const CountryDialog());
                               if (code != null) {
                                 context
                                     .read<Register2Cubit>()
