@@ -82,7 +82,10 @@ class _MainAuthPageState extends State<MainAuthPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          SvgPicture.asset(logo),
+          Image.asset(
+            'assets/logo.png',
+            width: 50,
+          ),
           const SizedBox(
             height: 18,
           ),

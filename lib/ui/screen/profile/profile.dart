@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:sun_point/server/server.dart';
 import 'package:sun_point/ui/screen/drawer_page.dart';
 import 'package:sun_point/ui/widgets/bottom_bar.dart';
 import 'package:sun_point/ui/widgets/lang_dialog.dart';
@@ -49,20 +48,45 @@ class ProfilePage extends StatelessWidget {
                                         width: 60,
                                         height: 60,
                                         decoration: const BoxDecoration(),
-                                        child: Image(
-                                          image: snapshot.data!.avatar == null
-                                              ? const AssetImage(
-                                                      'assets/profile.png')
-                                                  as ImageProvider
-                                              : NetworkImage(
-                                                  Server.getAbsluteUrl(
-                                                    snapshot.data!.avatar!,
-                                                  ),
-                                                  headers: {
-                                                      'Connection': 'Keep-Alive'
-                                                    }),
-                                          fit: BoxFit.contain,
-                                        ),
+                                        child: snapshot.data!.avatar == null
+                                            ? Container(
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      width: 2,
+                                                      color: Theme.of(context)
+                                                          .iconTheme
+                                                          .color!),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          1000),
+                                                ),
+                                                child: const Icon(
+                                                  Icons.person_outlined,
+                                                  size: 45,
+                                                ),
+                                              )
+                                            : Image.network(
+                                                snapshot.data!.avatar!,
+                                                fit: BoxFit.cover,
+                                                loadingBuilder: (context, child,
+                                                    loadingProgress) {
+                                                  if (loadingProgress == null) {
+                                                    return child;
+                                                  }
+
+                                                  if (loadingProgress
+                                                          .cumulativeBytesLoaded >=
+                                                      (loadingProgress
+                                                              .expectedTotalBytes ??
+                                                          0)) {
+                                                    return const Center(
+                                                      child:
+                                                          CircularProgressIndicator(),
+                                                    );
+                                                  }
+                                                  return child;
+                                                },
+                                              ),
                                       ),
                                     ),
                                     const SizedBox(

@@ -18,7 +18,7 @@ class ErrorDialog extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           color: Theme.of(context).scaffoldBackgroundColor,
         ),
-        height: 500,
+        height: 350,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -26,30 +26,30 @@ class ErrorDialog extends StatelessWidget {
               height: 32,
             ),
             SizedBox.square(
-              dimension: 100,
+              dimension: 70,
               child: Image.asset('assets/error.png'),
             ),
             const SizedBox(
               height: 8,
             ),
             const SizedBox(
-              height: 32,
+              height: 16,
             ),
             Text(
               'ERROR',
               style: TextStyle(
                   color: Colors.red.shade400,
-                  fontSize: 22,
+                  fontSize: 19,
                   fontWeight: FontWeight.bold),
             ).tr(),
             const SizedBox(
-              height: 64,
+              height: 32,
             ),
             Text(
               error,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                fontSize: 18,
+                fontSize: 16,
               ),
             ).tr(),
             Expanded(

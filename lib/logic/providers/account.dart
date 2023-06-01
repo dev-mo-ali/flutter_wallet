@@ -1,7 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:sun_point/server/server.dart';
 import 'package:sun_point/server/response.dart';
-import 'package:sun_point/utils/auth.dart';
 
 class AccountAPI {
   static Future<ServerResponse> resetPassword(
@@ -16,11 +15,9 @@ class AccountAPI {
   }
 
   static Future<ServerResponse> updateProfile(String name) async {
-    User user = await User.getUser();
     ServerResponse response =
         await Server.send(http.post, 'user/update_profile', body: {
       'name': name,
-      'email': user.email,
     });
     return response;
   }

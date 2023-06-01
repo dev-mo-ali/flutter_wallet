@@ -1,14 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import 'package:sun_point/logic/controllers/drawer.dart';
 import 'package:sun_point/ui/widgets/yes_no_dialog.dart';
 import 'package:sun_point/utils/auth.dart';
 import 'package:sun_point/utils/routes.dart';
-import 'package:sun_point/utils/ui/file_path.dart';
 
 class DrawerPage extends StatefulWidget {
   final Widget child;
@@ -64,7 +62,7 @@ class _DrawerPageState extends State<DrawerPage> with TickerProviderStateMixin {
                               return const SizedBox();
                             }
                             return Container(
-                              height: 100,
+                              height: 120,
                               width: MediaQuery.of(context).size.width * 0.6,
                               decoration: const BoxDecoration(
                                 borderRadius: BorderRadius.only(
@@ -79,16 +77,35 @@ class _DrawerPageState extends State<DrawerPage> with TickerProviderStateMixin {
                                           shape: BoxShape.circle,
                                           border: Border.all(
                                               color: const Color(0xffD8D9E4))),
-                                      child: CircleAvatar(
-                                        radius: 22.0,
-                                        backgroundColor: Theme.of(context)
-                                            .colorScheme
-                                            .background,
-                                        child: ClipRRect(
-                                          child: SvgPicture.asset(avatorOne),
-                                          borderRadius:
-                                              BorderRadius.circular(50.0),
-                                        ),
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(1000),
+                                        child: snap.data!.avatar == null
+                                            ? Container(
+                                                padding:
+                                                    const EdgeInsets.all(4),
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      width: 1.4,
+                                                      color: Theme.of(context)
+                                                          .iconTheme
+                                                          .color!),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          1000),
+                                                ),
+                                                child: const Icon(
+                                                  Icons.person_outlined,
+                                                  size: 25,
+                                                ),
+                                              )
+                                            : SizedBox.square(
+                                                dimension: 50,
+                                                child: Image.network(
+                                                  snap.data!.avatar!,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
                                       ),
                                     ),
                                     const SizedBox(
@@ -128,7 +145,7 @@ class _DrawerPageState extends State<DrawerPage> with TickerProviderStateMixin {
                         navigatorTitle("Home", Routes.home),
                         navigatorTitle("Profile", Routes.profile),
                         navigatorTitle("Account", Routes.account),
-                        navigatorTitle("Transactions", ""),
+                        navigatorTitle("Transactions", Routes.history),
                         navigatorTitle("Stats", ""),
                         navigatorTitle("Settings", ""),
                         navigatorTitle("Help", ""),

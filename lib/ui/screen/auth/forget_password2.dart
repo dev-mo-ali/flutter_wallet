@@ -2,10 +2,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:sun_point/logic/controllers/auth/forget_password1.dart';
-import 'package:sun_point/logic/models/auth/forget_password1.dart';
+import 'package:sun_point/logic/controllers/auth/forget_password2.dart';
+import 'package:sun_point/logic/models/auth/forget_password2.dart';
+import 'package:sun_point/ui/widgets/country_dialog.dart';
 import 'package:sun_point/ui/widgets/erro_dialog.dart';
+import 'package:sun_point/utils/routes.dart';
 
 class ForgetPassword2Args {
   String otp;
@@ -22,7 +23,8 @@ class ForgetPassword2Page extends StatelessWidget {
     required this.args,
   }) : super(key: key);
 
-  final TextEditingController password = TextEditingController(),
+  final TextEditingController phone = TextEditingController(),
+      password = TextEditingController(),
       passConf = TextEditingController();
 
   String? passwordValidator(String? value) {
@@ -53,14 +55,22 @@ class ForgetPassword2Page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ForgetPassword1Cubit(),
+      create: (context) => ForgetPassword2Cubit(),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Forget Password').tr(),
         ),
         body: MultiBlocListener(
           listeners: [
-            BlocListener<ForgetPassword1Cubit, ForgetPassword1State>(
+            BlocListener<ForgetPassword2Cubit, ForgetPassword2State>(
+              listenWhen: (previous, current) => current.done,
+              listener: (context, state) {
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil(Routes.mainAuth, (route) => false);
+              },
+              child: Container(),
+            ),
+            BlocListener<ForgetPassword2Cubit, ForgetPassword2State>(
               listenWhen: (previous, current) => current.error.isNotEmpty,
               listener: (context, state) {
                 showDialog(
@@ -100,13 +110,79 @@ class ForgetPassword2Page extends StatelessWidget {
                 height: 8,
               ),
               Center(
-                child: Text('Enter your new password',
+                child: Text('forgetPass2Summ',
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.labelLarge)
                     .tr(),
               ),
               const SizedBox(
                 height: 32,
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                decoration: BoxDecoration(
+                  borderRadius: (Theme.of(context)
+                          .inputDecorationTheme
+                          .enabledBorder as OutlineInputBorder)
+                      .borderRadius,
+                  border: Border.all(
+                      color: Theme.of(context)
+                          .inputDecorationTheme
+                          .enabledBorder!
+                          .borderSide
+                          .color),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(Icons.phone),
+                    BlocSelector<ForgetPassword2Cubit, ForgetPassword2State,
+                        String>(
+                      selector: (state) {
+                        return state.countryCode;
+                      },
+                      builder: (context, state) {
+                        return InkWell(
+                          onTap: () async {
+                            String? code = await showDialog(
+                                context: context,
+                                builder: (_) => const CountryDialog());
+                            if (code != null) {
+                              context
+                                  .read<ForgetPassword2Cubit>()
+                                  .setCode(code);
+                            }
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 6),
+                            child: Text(
+                              '+$state',
+                              style: Theme.of(context).textTheme.labelLarge,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    Expanded(
+                      child: TextFormField(
+                        controller: phone,
+                        decoration: InputDecoration(
+                          hintText: "Phone Number".tr(),
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          focusedErrorBorder: InputBorder.none,
+                        ),
+                        keyboardType: TextInputType.phone,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 10,
               ),
               TextFormField(
                 obscureText: true,
@@ -118,7 +194,7 @@ class ForgetPassword2Page extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: 16,
+                height: 10,
               ),
               TextFormField(
                 obscureText: true,
@@ -132,7 +208,7 @@ class ForgetPassword2Page extends StatelessWidget {
               const SizedBox(
                 height: 8,
               ),
-              BlocSelector<ForgetPassword1Cubit, ForgetPassword1State, bool>(
+              BlocSelector<ForgetPassword2Cubit, ForgetPassword2State, bool>(
                 selector: (state) {
                   return state.loading;
                 },
@@ -153,7 +229,11 @@ class ForgetPassword2Page extends StatelessWidget {
               ),
               Builder(builder: (context) {
                 return ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context
+                        .read<ForgetPassword2Cubit>()
+                        .submit(phone.text, password.text, args.otp);
+                  },
                   child: const Text('Next').tr(),
                 );
               }),

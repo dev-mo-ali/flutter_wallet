@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sun_point/ui/screen/account/account.dart';
-import 'package:sun_point/ui/screen/account/account_info.dart';
+import 'package:sun_point/ui/screen/profile/account_info.dart';
 import 'package:sun_point/ui/screen/account/reset_tpin1.dart';
 import 'package:sun_point/ui/screen/account/reset_tpin2.dart';
 import 'package:sun_point/ui/screen/account/reset_password.dart';
@@ -29,6 +29,9 @@ import 'package:sun_point/ui/screen/profile/profile.dart';
 import 'package:sun_point/ui/screen/profile/update_phone1.dart';
 import 'package:sun_point/ui/screen/profile/update_phone2.dart';
 import 'package:sun_point/ui/screen/profile/update_phone3.dart';
+import 'package:sun_point/ui/screen/wallet/history.dart';
+import 'package:sun_point/ui/screen/wallet/top_up.dart';
+import 'package:sun_point/ui/screen/wallet/transaction.dart';
 
 class Routes {
   static const startUp = '/';
@@ -61,6 +64,9 @@ class Routes {
   static const updatePhone1 = '/updatePhone1';
   static const updatePhone2 = '/updatePhone2';
   static const updatePhone3 = '/updatePhone3';
+  static const topUp = '/topUp';
+  static const history = '/history';
+  static const transaction = '/transaction';
 
   static Route? generate(RouteSettings settings) {
     switch (settings.name) {
@@ -143,6 +149,16 @@ class Routes {
         var args = settings.arguments as UpdatePhone3Args;
         return MaterialPageRoute(
             builder: (_) => UpdatePhone3Page(
+                  args: args,
+                ));
+      case topUp:
+        return MaterialPageRoute(builder: (_) => const TopUpPage());
+      case history:
+        return MaterialPageRoute(builder: (_) => HistoryPage());
+      case transaction:
+        var args = settings.arguments as TransactionArgs;
+        return MaterialPageRoute(
+            builder: (_) => TransactionPage(
                   args: args,
                 ));
     }

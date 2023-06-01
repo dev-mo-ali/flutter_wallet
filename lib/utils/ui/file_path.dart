@@ -1,8 +1,6 @@
-const String logo = 'assets/svg/logo.svg';
-
-const String avatorOne = 'assets/svg/avator1.svg';
-const String avatorTwo = 'assets/svg/avator2.svg';
-const String avatorThree = 'assets/svg/avator3.svg';
+const String avatarOne = 'assets/svg/avator1.svg';
+const String avatarTwo = 'assets/svg/avator2.svg';
+const String avatarThree = 'assets/svg/avator3.svg';
 
 const String mainBanner = 'assets/svg/bg_home.svg';
 const String cashback = 'assets/svg/cashback.svg';

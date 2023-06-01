@@ -115,26 +115,14 @@ class AuthAPI {
     return response;
   }
 
-  static Future<ServerResponse> sendForgetOtp(
-      String number, String local) async {
-    ServerResponse response =
-        await Server.send(http.post, 'user/check_username',
-            body: {
-              'username': number,
-              'locale': local,
-            },
-            useToken: false);
-    return response;
-  }
-
   static Future<ServerResponse> setForgottenPassword(
-      String number, String password, String confPassword, String otp) async {
+      String number, String password, String otp) async {
     ServerResponse response =
         await Server.send(http.post, 'user/forgot_password',
             body: {
               'username': number,
               'password': password,
-              'password_confirmation': confPassword,
+              'password_confirmation': password,
               'otp': otp
             },
             useToken: false);

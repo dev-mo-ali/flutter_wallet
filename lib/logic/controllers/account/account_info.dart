@@ -13,7 +13,7 @@ class AccountInfoCubit extends Cubit<AccountInfoState> {
 // get user and emit it
   Future<void> getUser() async {
     User user = await User.getUser();
-    emit(state.copyWith(user: user));
+    emit(state.copyWith(user: user, birth: user.birthday, idType: user.idType));
   }
 
   void pickImage() async {
@@ -45,6 +45,10 @@ class AccountInfoCubit extends Cubit<AccountInfoState> {
       }
     }
   }
+
+  void setBirth(DateTime birth) => emit(state.copyWith(birth: birth));
+  void setIdType(String type) => emit(state.copyWith(idType: type));
+  void setCode(String code) => emit(state.copyWith(countryCode: code));
 
   void submit(String name) async {
     emit(state.copyWith(loading: true));

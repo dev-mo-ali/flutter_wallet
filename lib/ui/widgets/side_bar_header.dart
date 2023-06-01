@@ -20,8 +20,8 @@ class SideBarHeader extends StatelessWidget {
               children: [
                 Row(
                   children: <Widget>[
-                    SvgPicture.asset(
-                      logo,
+                    Image.asset(
+                      'assets/logo.png',
                       width: 34,
                     ),
                     const SizedBox(

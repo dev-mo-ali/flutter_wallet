@@ -15,10 +15,10 @@ import 'package:sun_point/utils/validators.dart';
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
 
-  final TextEditingController phone = TextEditingController(),
-      password = TextEditingController();
-  // final TextEditingController phone = TextEditingController(text: '12345678'),
-  //     password = TextEditingController(text: '12345678');
+  // final TextEditingController phone = TextEditingController(),
+  //     password = TextEditingController();
+  final TextEditingController phone = TextEditingController(text: '12345678'),
+      password = TextEditingController(text: '12345678');
   final GlobalKey<FormState> _formKey = GlobalKey();
   @override
   Widget build(BuildContext context) {

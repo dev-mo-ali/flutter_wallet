@@ -120,8 +120,16 @@ class WalletAPI {
 
   static Future<ServerResponse> getTransactions(
       int userWalletID, int page) async {
+    // String data = await rootBundle.loadString('assets/mocks/history.json');
+    // ServerResponse response = ServerResponse.fromDio(Response(
+    //     requestOptions: RequestOptions(),
+    //     statusCode: 200,
+    //     data: jsonDecode(data),
+    //     headers: Headers.fromMap({
+    //       "Content-Type": ["application/json"]
+    //     })));
     ServerResponse response = await Server.sendDio('user/get_transactions',
-        body: {'user_wallet_id': userWalletID, 'page_number': page});
+        body: {'user_wallet_id': userWalletID, 'page': page});
     return response;
   }
 
