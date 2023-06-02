@@ -14,10 +14,24 @@ class AccountAPI {
     return response;
   }
 
-  static Future<ServerResponse> updateProfile(String name) async {
+  static Future<ServerResponse> updateProfile(
+    String name,
+    String identificationType,
+    String identificationNumber,
+    String birthday,
+    String emergencyName,
+    String emergencyPhone,
+    String emergencyRelationship,
+  ) async {
     ServerResponse response =
         await Server.send(http.post, 'user/update_profile', body: {
       'name': name,
+      'identification_type': identificationType,
+      'identification_number': identificationNumber,
+      "birthday": birthday,
+      "emergency_contact_full_name": emergencyName,
+      "emergency_contact_phone_number": emergencyPhone,
+      "emergency_contact_relationship": emergencyRelationship,
     });
     return response;
   }

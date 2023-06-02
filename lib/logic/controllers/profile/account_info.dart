@@ -1,9 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:sun_point/logic/models/account/account_info.dart';
 import 'package:sun_point/logic/providers/account.dart';
 import 'package:sun_point/server/response.dart';
 import 'package:sun_point/utils/auth.dart';
+import 'package:sun_point/utils/validators.dart';
 
 class AccountInfoCubit extends Cubit<AccountInfoState> {
   AccountInfoCubit() : super(AccountInfoState()) {
@@ -50,16 +52,44 @@ class AccountInfoCubit extends Cubit<AccountInfoState> {
   void setIdType(String type) => emit(state.copyWith(idType: type));
   void setCode(String code) => emit(state.copyWith(countryCode: code));
 
-  void submit(String name) async {
-    emit(state.copyWith(loading: true));
-    ServerResponse response = await AccountAPI.updateProfile(name);
-    if (response.isSuccess) {
-      // save new user data
-      await User.setUser(response.data);
-      emit(state.copyWith(loading: false, error: ''));
-    } else {
-      emit(state.copyWith(loading: false, error: response.code.code));
+  bool validatePhoneNumber(String number) {
+    String? numberErr = phoneNumberValidator(number);
+    if (numberErr != null) {
+      emit(state.copyWith(error: numberErr));
       emit(state.copyWith(error: ''));
+      return false;
+    }
+
+    return true;
+  }
+
+  void submit(
+    String name,
+    String idNumber,
+    String emergencyName,
+    String emergencyPhone,
+    String emergencyRelationship,
+  ) async {
+    if (!state.loading && validatePhoneNumber(emergencyPhone)) {
+      emit(state.copyWith(loading: true));
+      DateFormat format = DateFormat('yyyy-MM-dd', 'en');
+
+      ServerResponse response = await AccountAPI.updateProfile(
+          name,
+          state.idType!,
+          idNumber,
+          format.format(state.birth!),
+          emergencyName,
+          state.countryCode + emergencyPhone,
+          emergencyRelationship);
+      if (response.isSuccess) {
+        // save new user data
+        await User.setUser(response.data['user']);
+        emit(state.copyWith(loading: false, done: true, error: ''));
+      } else {
+        emit(state.copyWith(loading: false, error: response.code.code));
+        emit(state.copyWith(error: ''));
+      }
     }
   }
 }

@@ -85,7 +85,7 @@ class Register2Cubit extends Cubit<Register2State> {
 
       String imei = await FlutterUdid.udid;
 
-      DateFormat format = DateFormat('yyyy-MM-dd');
+      DateFormat format = DateFormat('yyyy-MM-dd', 'en');
       String deviceModel = await _getModel();
       String deviceType = Platform.isAndroid ? 'android' : 'ios';
 

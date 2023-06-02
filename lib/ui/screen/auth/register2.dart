@@ -26,7 +26,7 @@ class Register2Args {
 
 class Register2Page extends StatelessWidget {
   final Register2Args args;
-  final DateFormat format = DateFormat('yyyy-MM-dd');
+  final DateFormat format = DateFormat('yyyy-MM-dd', 'en');
   Register2Page({
     Key? key,
     required this.args,

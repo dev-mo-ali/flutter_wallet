@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:sun_point/logic/controllers/account/account_info.dart';
+import 'package:sun_point/logic/controllers/profile/account_info.dart';
 import 'package:sun_point/logic/models/account/account_info.dart';
 import 'package:sun_point/ui/widgets/country_dialog.dart';
 import 'package:sun_point/ui/widgets/erro_dialog.dart';
-import 'package:sun_point/utils/auth.dart';
 import 'package:sun_point/utils/validators.dart';
 
 class AccountInfoPage extends StatelessWidget {
@@ -19,7 +18,7 @@ class AccountInfoPage extends StatelessWidget {
       emergencyRelationship = TextEditingController(),
       idNumber = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey();
-  final DateFormat format = DateFormat('yyyy-MM-dd');
+  final DateFormat format = DateFormat('yyyy-MM-dd', 'en');
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -49,14 +48,69 @@ class AccountInfoPage extends StatelessWidget {
           appBar: AppBar(
             title: const Text('My Profile').tr(),
           ),
-          body: BlocSelector<AccountInfoCubit, AccountInfoState, User?>(
-            selector: (state) => state.user,
+          body: BlocBuilder<AccountInfoCubit, AccountInfoState>(
+            buildWhen: (previous, current) =>
+                previous.user != current.user || current.done,
             builder: (context, state) {
-              if (state == null) {
+              if (state.user == null) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
               }
+
+              if (state.done) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 40),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const SizedBox(
+                        height: 42,
+                      ),
+                      Center(
+                        child: Container(
+                          padding: const EdgeInsets.all(14),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(1000),
+                              border: Border.all(
+                                  color: Theme.of(context).iconTheme.color!,
+                                  width: 2)),
+                          child: const Icon(
+                            Icons.done,
+                            color: Colors.green,
+                            size: 70,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 32,
+                      ),
+                      Center(
+                        child: Text('SUCCESS!',
+                                style:
+                                    Theme.of(context).textTheme.displayMedium)
+                            .tr(),
+                      ),
+                      Center(
+                        child: Text(
+                          'profileUpdateSucc',
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.labelLarge,
+                        ).tr(),
+                      ),
+                      const SizedBox(
+                        height: 64,
+                      ),
+                      ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('Ok').tr())
+                    ],
+                  ),
+                );
+              }
+
               return ListView(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 children: [
@@ -77,45 +131,43 @@ class AccountInfoPage extends StatelessWidget {
                                 )
                               : ClipRRect(
                                   borderRadius: BorderRadius.circular(1000),
-                                  child: state.user!.avatar == null
-                                      ? Container(
-                                          decoration: BoxDecoration(
-                                            border: Border.all(
-                                                width: 3,
-                                                color: Theme.of(context)
-                                                    .iconTheme
-                                                    .color!),
-                                            borderRadius:
-                                                BorderRadius.circular(1000),
-                                          ),
-                                          child: const Icon(
-                                            Icons.person_outlined,
-                                            size: 120,
-                                          ),
-                                        )
-                                      : Image.network(
-                                          state.user!.avatar!,
-                                          fit: BoxFit.cover,
-                                          loadingBuilder: (context, child,
-                                              loadingProgress) {
-                                            if (loadingProgress == null) {
-                                              return child;
-                                            }
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          width: 3,
+                                          color: Theme.of(context)
+                                              .iconTheme
+                                              .color!),
+                                      borderRadius: BorderRadius.circular(1000),
+                                    ),
+                                    child: state.user!.avatar == null
+                                        ? const Icon(
+                                            Icons.camera_alt_outlined,
+                                            size: 100,
+                                          )
+                                        : Image.network(
+                                            state.user!.avatar!,
+                                            fit: BoxFit.cover,
+                                            loadingBuilder: (context, child,
+                                                loadingProgress) {
+                                              if (loadingProgress == null) {
+                                                return child;
+                                              }
 
-                                            if (loadingProgress
-                                                    .cumulativeBytesLoaded >=
-                                                (loadingProgress
-                                                        .expectedTotalBytes ??
-                                                    0)) {
-                                              return const Center(
-                                                child:
-                                                    CircularProgressIndicator(),
-                                              );
-                                            }
-                                            return child;
-                                          },
-                                        ),
-                                ),
+                                              if (loadingProgress
+                                                      .cumulativeBytesLoaded >=
+                                                  (loadingProgress
+                                                          .expectedTotalBytes ??
+                                                      0)) {
+                                                return const Center(
+                                                  child:
+                                                      CircularProgressIndicator(),
+                                                );
+                                              }
+                                              return child;
+                                            },
+                                          ),
+                                  )),
                         ),
                       ),
                     ),
@@ -132,7 +184,7 @@ class AccountInfoPage extends StatelessWidget {
                     height: 8,
                   ),
                   Text(
-                    state.username,
+                    state.user!.username,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.labelLarge,
                   ),
@@ -442,7 +494,12 @@ class AccountInfoPage extends StatelessWidget {
                   ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          context.read<AccountInfoCubit>().submit(name.text);
+                          context.read<AccountInfoCubit>().submit(
+                              name.text,
+                              idNumber.text,
+                              emergencyName.text,
+                              emergencyPhone.text,
+                              emergencyRelationship.text);
                         }
                       },
                       child: const Text('Update').tr())

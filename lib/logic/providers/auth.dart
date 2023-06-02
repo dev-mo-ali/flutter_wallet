@@ -28,6 +28,14 @@ class AuthAPI {
     return response;
   }
 
+  static Future<ServerResponse> checkForgetPassOTP(String otp) async {
+    ServerResponse response = await Server.send(
+        http.post, 'user/check_forgot_password_otp',
+        body: {"otp": otp, "otp_type_code": OTP_TYPE_CODE_FORGOT_PASSWORD},
+        useToken: false);
+    return response;
+  }
+
   static Future<ServerResponse> submitRegisterRequest(
     String name,
     String password,

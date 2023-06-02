@@ -93,6 +93,8 @@ class _HomePageState extends State<HomePage> {
                               ),
                               options: CarouselOptions(
                                   autoPlay: true,
+                                  autoPlayInterval:
+                                      const Duration(milliseconds: 6500),
                                   height: 120,
                                   reverse: true,
                                   viewportFraction: 1,

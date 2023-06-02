@@ -123,8 +123,8 @@
     "upgradeSum":"New version available.",
     "Remember me later":"Remember me later",
     "General":"General",
-    "Unlock Phone":"Unlock Phone",
-    "askUnlock":"Do want to login from other device?\nYou need to unlock your account.",
+    "Unlock Phone":"Change Phone Device",
+    "askUnlock":"Change your phone device to be able to login from new device",
     "unlockSuccSumm":"Change Phone Request Sent Successfully, Please login using your new device. You will be logged out from this device",
     "Change Phone Number":"Change Phone Number",
     "CHANGE PHONE NUMBER":"CHANGE PHONE NUMBER",
@@ -181,7 +181,8 @@
     "WITHDRAW":"Withdraw", 
     "RECEIVE":"Receive",
     "forgetPass2Summ":"Enter your phone number and the new password",
-    "Identification Number":"Identification Number"
+    "Identification Number":"Identification Number",
+    "profileUpdateSucc":"Your profile was updated successfully"
     
     
 }

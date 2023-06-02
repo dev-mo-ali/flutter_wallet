@@ -8,6 +8,7 @@ class AccountInfoState {
   DateTime? birth;
   String? idType;
   String countryCode;
+  bool done;
   AccountInfoState({
     this.user,
     this.avatarLoading = false,
@@ -16,6 +17,7 @@ class AccountInfoState {
     this.birth,
     this.idType,
     this.countryCode = '60',
+    this.done = false,
   });
 
   AccountInfoState copyWith({
@@ -26,6 +28,7 @@ class AccountInfoState {
     DateTime? birth,
     String? idType,
     String? countryCode,
+    bool? done,
   }) {
     return AccountInfoState(
       user: user ?? this.user,
@@ -35,6 +38,7 @@ class AccountInfoState {
       birth: birth ?? this.birth,
       idType: idType ?? this.idType,
       countryCode: countryCode ?? this.countryCode,
+      done: done ?? this.done,
     );
   }
 }

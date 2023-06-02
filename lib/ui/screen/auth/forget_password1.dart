@@ -31,6 +31,15 @@ class ForgetPassword1Page extends StatelessWidget {
         body: MultiBlocListener(
           listeners: [
             BlocListener<ForgetPassword1Cubit, ForgetPassword1State>(
+              listenWhen: (previous, current) => current.done,
+              listener: (context, state) {
+                String otp = otpFields.map((e) => e['controller'].text).join();
+                Navigator.of(context).pushReplacementNamed(
+                    Routes.forgetPassword2,
+                    arguments: ForgetPassword2Args(otp: otp));
+              },
+            ),
+            BlocListener<ForgetPassword1Cubit, ForgetPassword1State>(
               listenWhen: (previous, current) => current.error.isNotEmpty,
               listener: (context, state) {
                 showDialog(
@@ -127,15 +136,6 @@ class ForgetPassword1Page extends StatelessWidget {
                                     otpFields[index + 1]['node'].requestFocus();
                                   } else {
                                     e['node'].unfocus();
-                                    String code = otpFields
-                                        .map((e) => e['controller'].text)
-                                        .toList()
-                                        .join();
-                                    if (code.length == 4) {
-                                      context
-                                          .read<ForgetPassword1Cubit>()
-                                          .submit(code);
-                                    }
                                   }
                                 } else {
                                   e['filled'] = false;
@@ -172,8 +172,9 @@ class ForgetPassword1Page extends StatelessWidget {
               Builder(builder: (context) {
                 return ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pushNamed(Routes.forgetPassword2,
-                        arguments: ForgetPassword2Args(otp: '1111'));
+                    String otp =
+                        otpFields.map((e) => e['controller'].text).join();
+                    context.read<ForgetPassword1Cubit>().submit(otp);
                   },
                   child: const Text('Next').tr(),
                 );
