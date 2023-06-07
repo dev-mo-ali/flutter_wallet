@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sun_point/logic/controllers/profile/account_info.dart';
 import 'package:sun_point/logic/models/account/account_info.dart';
-import 'package:sun_point/ui/widgets/country_dialog.dart';
+
 import 'package:sun_point/ui/widgets/erro_dialog.dart';
 import 'package:sun_point/utils/validators.dart';
 
@@ -27,10 +27,17 @@ class AccountInfoPage extends StatelessWidget {
         listeners: [
           BlocListener<AccountInfoCubit, AccountInfoState>(
             listenWhen: (previous, current) =>
-                previous.user != current.user && previous.user == null,
+                current.data != previous.data && current.data != null,
             listener: (context, state) {
-              name.text = state.user!.name ?? '';
-              email.text = state.user!.email ?? '';
+              name.text = state.data!['user']['name'];
+              email.text = state.data!['user']['email'];
+              idNumber.text = state.data!['user']['identification_number'];
+              emergencyName.text =
+                  state.data!['emergency_contacts']['full_name'];
+              emergencyPhone.text =
+                  state.data!['emergency_contacts']['phone_number'];
+              emergencyRelationship.text =
+                  state.data!['emergency_contacts']['relationship'];
             },
           ),
           BlocListener<AccountInfoCubit, AccountInfoState>(
@@ -50,11 +57,37 @@ class AccountInfoPage extends StatelessWidget {
           ),
           body: BlocBuilder<AccountInfoCubit, AccountInfoState>(
             buildWhen: (previous, current) =>
-                previous.user != current.user || current.done,
+                previous.loading != current.loading || current.done,
             builder: (context, state) {
-              if (state.user == null) {
+              if (state.loading) {
                 return const Center(
                   child: CircularProgressIndicator(),
+                );
+              }
+              if (!state.loading && state.data == null) {
+                return Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        "Error occurred.",
+                        style: TextStyle(
+                          color: Colors.red,
+                        ),
+                        textAlign: TextAlign.center,
+                      ).tr(),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      TextButton(
+                          onPressed: () => context
+                              .read<AccountInfoCubit>()
+                              .load()
+                              .then((value) => null),
+                          child: const Text('Retry').tr())
+                    ],
+                  ),
                 );
               }
 
@@ -140,13 +173,13 @@ class AccountInfoPage extends StatelessWidget {
                                               .color!),
                                       borderRadius: BorderRadius.circular(1000),
                                     ),
-                                    child: state.user!.avatar == null
+                                    child: state.data!['user']['avatar'] == null
                                         ? const Icon(
                                             Icons.camera_alt_outlined,
                                             size: 100,
                                           )
                                         : Image.network(
-                                            state.user!.avatar!,
+                                            state.data!['user']['avatar'],
                                             fit: BoxFit.cover,
                                             loadingBuilder: (context, child,
                                                 loadingProgress) {
@@ -184,7 +217,7 @@ class AccountInfoPage extends StatelessWidget {
                     height: 8,
                   ),
                   Text(
-                    state.user!.username,
+                    state.data!['user']['username'],
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.labelLarge,
                   ),
@@ -299,11 +332,11 @@ class AccountInfoPage extends StatelessWidget {
                                         child: Text(
                                           state != null
                                               ? format.format(state)
-                                              : 'Birthday',
+                                              : 'Birthday'.tr(),
                                           style: Theme.of(context)
                                               .inputDecorationTheme
                                               .labelStyle,
-                                        ).tr(),
+                                        ),
                                       ),
                                     );
                                   },
@@ -403,71 +436,12 @@ class AccountInfoPage extends StatelessWidget {
                         const SizedBox(
                           height: 16,
                         ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          decoration: BoxDecoration(
-                            borderRadius: (Theme.of(context)
-                                    .inputDecorationTheme
-                                    .enabledBorder as OutlineInputBorder)
-                                .borderRadius,
-                            border: Border.all(
-                                color: Theme.of(context)
-                                    .inputDecorationTheme
-                                    .enabledBorder!
-                                    .borderSide
-                                    .color),
-                          ),
-                          child: Row(
-                            children: [
-                              const Icon(Icons.phone),
-                              BlocSelector<AccountInfoCubit, AccountInfoState,
-                                  String>(
-                                selector: (state) {
-                                  return state.countryCode;
-                                },
-                                builder: (context, state) {
-                                  return InkWell(
-                                    onTap: () async {
-                                      String? code = await showDialog(
-                                          context: context,
-                                          builder: (_) =>
-                                              const CountryDialog());
-                                      if (code != null) {
-                                        context
-                                            .read<AccountInfoCubit>()
-                                            .setCode(code);
-                                      }
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 8),
-                                      child: Text(
-                                        '+$state',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelLarge,
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                              Expanded(
-                                child: TextFormField(
-                                  controller: emergencyPhone,
-                                  decoration: InputDecoration(
-                                    hintText: "Phone Number".tr(),
-                                    focusedBorder: InputBorder.none,
-                                    enabledBorder: InputBorder.none,
-                                    errorBorder: InputBorder.none,
-                                    focusedErrorBorder: InputBorder.none,
-                                  ),
-                                  keyboardType: TextInputType.phone,
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.digitsOnly
-                                  ],
-                                ),
-                              ),
-                            ],
+                        TextFormField(
+                          validator: phoneNumberValidator,
+                          controller: emergencyPhone,
+                          decoration: InputDecoration(
+                            labelText: "Phone Number".tr(),
+                            prefixIcon: const Icon(Icons.phone_outlined),
                           ),
                         ),
                       ],
@@ -480,7 +454,7 @@ class AccountInfoPage extends StatelessWidget {
                     height: 64,
                     child:
                         BlocSelector<AccountInfoCubit, AccountInfoState, bool>(
-                      selector: (state) => state.loading,
+                      selector: (state) => state.submitting,
                       builder: (context, state) {
                         return state
                             ? const Center(child: CircularProgressIndicator())

@@ -9,13 +9,26 @@ import 'package:sun_point/utils/validators.dart';
 
 class AccountInfoCubit extends Cubit<AccountInfoState> {
   AccountInfoCubit() : super(AccountInfoState()) {
-    getUser().then((value) => null);
+    load().then((value) => null);
   }
 
 // get user and emit it
-  Future<void> getUser() async {
-    User user = await User.getUser();
-    emit(state.copyWith(user: user, birth: user.birthday, idType: user.idType));
+  Future<void> load() async {
+    emit(state.copyWith(loading: true));
+
+    ServerResponse response = await AccountAPI.getProfile();
+    if (response.isSuccess) {
+      Map data = {};
+      data['user'] = response.data['user'][0];
+      data['emergency_contacts'] = response.data['emergency_contacts'][0];
+      emit(state.copyWith(
+          loading: false,
+          data: data,
+          birth: DateTime.parse(data['user']['birthday']),
+          idType: data['user']['identification_type']));
+    } else {
+      emit(state.copyWith(loading: false));
+    }
   }
 
   void pickImage() async {
@@ -33,9 +46,9 @@ class AccountInfoCubit extends Cubit<AccountInfoState> {
           await User.setUser(response.data);
 
           emit(state.copyWith(
-              avatarLoading: false,
-              error: '',
-              user: User.fromMap(response.data)));
+            avatarLoading: false,
+            error: '',
+          ));
         } else {
           emit(state.copyWith(avatarLoading: false, error: response.code.code));
           emit(state.copyWith(error: ''));
@@ -50,7 +63,7 @@ class AccountInfoCubit extends Cubit<AccountInfoState> {
 
   void setBirth(DateTime birth) => emit(state.copyWith(birth: birth));
   void setIdType(String type) => emit(state.copyWith(idType: type));
-  void setCode(String code) => emit(state.copyWith(countryCode: code));
+  // void setCode(String code) => emit(state.copyWith(countryCode: code));
 
   bool validatePhoneNumber(String number) {
     String? numberErr = phoneNumberValidator(number);
@@ -70,8 +83,8 @@ class AccountInfoCubit extends Cubit<AccountInfoState> {
     String emergencyPhone,
     String emergencyRelationship,
   ) async {
-    if (!state.loading && validatePhoneNumber(emergencyPhone)) {
-      emit(state.copyWith(loading: true));
+    if (!state.submitting && validatePhoneNumber(emergencyPhone)) {
+      emit(state.copyWith(submitting: true));
       DateFormat format = DateFormat('yyyy-MM-dd', 'en');
 
       ServerResponse response = await AccountAPI.updateProfile(
@@ -80,14 +93,14 @@ class AccountInfoCubit extends Cubit<AccountInfoState> {
           idNumber,
           format.format(state.birth!),
           emergencyName,
-          state.countryCode + emergencyPhone,
+          emergencyPhone,
           emergencyRelationship);
       if (response.isSuccess) {
         // save new user data
         await User.setUser(response.data['user']);
-        emit(state.copyWith(loading: false, done: true, error: ''));
+        emit(state.copyWith(submitting: false, done: true, error: ''));
       } else {
-        emit(state.copyWith(loading: false, error: response.code.code));
+        emit(state.copyWith(submitting: false, error: response.code.code));
         emit(state.copyWith(error: ''));
       }
     }

@@ -1,43 +1,41 @@
-import 'package:sun_point/utils/auth.dart';
-
 class AccountInfoState {
-  User? user;
   bool avatarLoading;
   bool loading;
+  bool submitting;
   String error;
   DateTime? birth;
   String? idType;
-  String countryCode;
+  Map? data;
   bool done;
   AccountInfoState({
-    this.user,
     this.avatarLoading = false,
-    this.loading = false,
+    this.loading = true,
+    this.submitting = false,
     this.error = '',
     this.birth,
     this.idType,
-    this.countryCode = '60',
+    this.data,
     this.done = false,
   });
 
   AccountInfoState copyWith({
-    User? user,
     bool? avatarLoading,
     bool? loading,
+    bool? submitting,
     String? error,
     DateTime? birth,
     String? idType,
-    String? countryCode,
+    Map? data,
     bool? done,
   }) {
     return AccountInfoState(
-      user: user ?? this.user,
       avatarLoading: avatarLoading ?? this.avatarLoading,
       loading: loading ?? this.loading,
+      submitting: submitting ?? this.submitting,
       error: error ?? this.error,
       birth: birth ?? this.birth,
       idType: idType ?? this.idType,
-      countryCode: countryCode ?? this.countryCode,
+      data: data ?? this.data,
       done: done ?? this.done,
     );
   }

@@ -2,22 +2,24 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sun_point/logic/controllers/wallet/top_up.dart';
-import 'package:sun_point/logic/models/wallet/top_up.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:sun_point/logic/controllers/wallet/withdraw.dart';
+import 'package:sun_point/logic/models/wallet/withdraw.dart';
 import 'package:sun_point/ui/widgets/erro_dialog.dart';
 import 'package:sun_point/utils/validators.dart';
 
-class TopUpPage extends StatelessWidget {
+class WithdrawPage extends StatelessWidget {
   final TextEditingController amount = TextEditingController(),
-      voucher = TextEditingController();
+      accountNumber = TextEditingController(),
+      holderName = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey();
 
-  TopUpPage({super.key});
+  WithdrawPage({super.key});
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => TopUpCubit(),
-      child: BlocListener<TopUpCubit, TopUpState>(
+      create: (context) => WithdrawCubit(),
+      child: BlocListener<WithdrawCubit, WithdrawState>(
         listenWhen: (previous, current) => current.error.isNotEmpty,
         listener: (context, state) {
           showDialog(
@@ -28,9 +30,9 @@ class TopUpPage extends StatelessWidget {
         },
         child: Scaffold(
           appBar: AppBar(
-            title: const Text('Top Up').tr(),
+            title: const Text('Withdraw').tr(),
           ),
-          body: BlocSelector<TopUpCubit, TopUpState, bool>(
+          body: BlocSelector<WithdrawCubit, WithdrawState, bool>(
             selector: (state) {
               return state.done;
             },
@@ -70,17 +72,13 @@ class TopUpPage extends StatelessWidget {
                       ),
                       Center(
                         child: Text(
-                          'topUpSucc',
+                          'withdrawSucc',
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.labelLarge,
                         ).tr(),
                       ),
                       const SizedBox(
                         height: 64,
-                      ),
-                      _card(),
-                      const SizedBox(
-                        height: 16,
                       ),
                       ElevatedButton(
                           onPressed: () {
@@ -102,20 +100,21 @@ class TopUpPage extends StatelessWidget {
                     ),
                     Center(
                       child: Container(
-                          padding: const EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(15),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(1000),
                               border: Border.all(
                                   color: Theme.of(context).iconTheme.color!,
                                   width: 2)),
-                          child: const Icon(
-                            Icons.wallet,
-                            size: 70,
+                          child: SvgPicture.asset(
+                            'assets/svg/withdraw.svg',
+                            width: 65,
+                            color: Theme.of(context).iconTheme.color,
                           )),
                     ),
                     Center(
                       child: Text(
-                        'TOP UP',
+                        'WITHDRAWTitle',
                         style: Theme.of(context).textTheme.displayMedium,
                       ).tr(),
                     ),
@@ -123,7 +122,7 @@ class TopUpPage extends StatelessWidget {
                       height: 8,
                     ),
                     Center(
-                      child: Text('topUpSum',
+                      child: Text('withdrawSum',
                               textAlign: TextAlign.center,
                               style: Theme.of(context).textTheme.labelLarge)
                           .tr(),
@@ -131,70 +130,67 @@ class TopUpPage extends StatelessWidget {
                     const SizedBox(
                       height: 24,
                     ),
-                    BlocSelector<TopUpCubit, TopUpState, bool>(
-                      selector: (state) => state.isVoucher,
-                      builder: (context, state) {
-                        return TextFormField(
-                          enabled: !state,
-                          controller: amount,
-                          validator: !state ? amountValidator : null,
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(RegExp(r'\d|\.'))
-                          ],
-                          decoration: InputDecoration(
-                            labelText: "Amount".tr(),
-                          ),
-                          onChanged: (value) =>
-                              context.read<TopUpCubit>().getAmount(value),
-                        );
-                      },
-                    ),
-                    const SizedBox(
-                      height: 50,
-                    ),
-                    BlocSelector<TopUpCubit, TopUpState, bool>(
-                      selector: (state) => state.isVoucher,
-                      builder: (context, state) {
-                        return CheckboxListTile(
-                          value: state,
-                          title: const Text('Use a voucher').tr(),
-                          onChanged: (value) {
-                            context.read<TopUpCubit>().setIsVoucher(value!);
-                            if (value) {
-                              amount.clear();
-                            } else {
-                              voucher.clear();
-                            }
-                          },
-                        );
-                      },
-                    ),
-                    BlocSelector<TopUpCubit, TopUpState, bool>(
-                      selector: (state) => state.isVoucher,
-                      builder: (context, state) {
-                        return TextFormField(
-                          controller: voucher,
-                          enabled: state,
-                          validator: state ? isNotEmpty : null,
-                          decoration:
-                              InputDecoration(labelText: "Voucher Code".tr()),
-                        );
-                      },
+                    TextFormField(
+                      enabled: !state,
+                      controller: amount,
+                      validator: !state ? amountValidator : null,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp(r'\d|\.'))
+                      ],
+                      decoration: InputDecoration(
+                        labelText: "Amount".tr(),
+                      ),
                     ),
                     const SizedBox(
                       height: 12,
                     ),
-                    _card(),
+                    Text(
+                      "Bank Details:",
+                      style: Theme.of(context)
+                          .textTheme
+                          .labelLarge!
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ).tr(),
                     const SizedBox(
                       height: 8,
+                    ),
+                    DropdownButtonFormField(
+                        hint: const Text("Select your bank").tr(),
+                        items: List.generate(
+                            3,
+                            (index) => DropdownMenuItem(
+                                value: index,
+                                child: Text("Bank ${index + 1}"))),
+                        onChanged: (v) {}),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    TextFormField(
+                      controller: accountNumber,
+                      validator: isNotEmpty,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      decoration: InputDecoration(
+                        labelText: "Account Number".tr(),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    TextFormField(
+                      controller: holderName,
+                      validator: isNotEmpty,
+                      decoration: const InputDecoration(
+                        labelText: "Holder Name",
+                      ),
                     ),
                     Center(
                       child: SizedBox.square(
                         dimension: 32,
-                        child: BlocSelector<TopUpCubit, TopUpState, bool>(
+                        child: BlocSelector<WithdrawCubit, WithdrawState, bool>(
                           selector: (state) {
-                            return state.loading;
+                            return state.submitting;
                           },
                           builder: (context, state) {
                             return Visibility(
@@ -210,11 +206,7 @@ class TopUpPage extends StatelessWidget {
                     Builder(builder: (context) {
                       return ElevatedButton(
                           onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              context
-                                  .read<TopUpCubit>()
-                                  .submit(amount.text, voucher.text);
-                            }
+                            if (_formKey.currentState!.validate()) {}
                           },
                           child: const Text("Next").tr());
                     })
@@ -224,50 +216,6 @@ class TopUpPage extends StatelessWidget {
             },
           ),
         ),
-      ),
-    );
-  }
-
-  Center _card() {
-    return Center(
-      child: BlocSelector<TopUpCubit, TopUpState, bool>(
-        selector: (state) => state.isVoucher,
-        builder: (context, state) {
-          return Visibility(
-            visible: !state,
-            child: Card(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    Text(
-                      'You will receive',
-                      style: Theme.of(context).textTheme.labelLarge,
-                    ).tr(),
-                    BlocBuilder<TopUpCubit, TopUpState>(
-                      buildWhen: (previous, current) =>
-                          previous.loadingAmount != current.loadingAmount ||
-                          previous.amount != current.amount,
-                      builder: (context, state) {
-                        return Visibility(
-                          visible: state.loadingAmount,
-                          replacement: Text(
-                            state.amount.toStringAsFixed(2),
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelMedium!
-                                .copyWith(fontSize: 18),
-                          ),
-                          child: const CircularProgressIndicator(),
-                        );
-                      },
-                    )
-                  ],
-                ),
-              ),
-            ),
-          );
-        },
       ),
     );
   }

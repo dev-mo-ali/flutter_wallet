@@ -2,9 +2,22 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:sun_point/utils/auth.dart';
+import 'package:sun_point/utils/routes.dart';
 
-class ShowQRPage extends StatelessWidget {
+class ShowQRPage extends StatefulWidget {
   const ShowQRPage({super.key});
+
+  @override
+  State<ShowQRPage> createState() => _ShowQRPageState();
+}
+
+class _ShowQRPageState extends State<ShowQRPage> {
+  @override
+  void initState() {
+    Future.delayed(const Duration(minutes: 1)).then(
+        (value) => Navigator.of(context).pushReplacementNamed(Routes.enterPIN));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,22 +50,18 @@ class ShowQRPage extends StatelessWidget {
                                   child: Container(
                                     width: 60,
                                     height: 60,
-                                    decoration: const BoxDecoration(),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          width: 3,
+                                          color: Theme.of(context)
+                                              .iconTheme
+                                              .color!),
+                                      borderRadius: BorderRadius.circular(1000),
+                                    ),
                                     child: snapshot.data!.avatar == null
-                                        ? Container(
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  width: 3,
-                                                  color: Theme.of(context)
-                                                      .iconTheme
-                                                      .color!),
-                                              borderRadius:
-                                                  BorderRadius.circular(1000),
-                                            ),
-                                            child: const Icon(
-                                              Icons.person_outlined,
-                                              size: 45,
-                                            ),
+                                        ? const Icon(
+                                            Icons.person_outlined,
+                                            size: 45,
                                           )
                                         : Image.network(
                                             snapshot.data!.avatar!,
@@ -85,12 +94,12 @@ class ShowQRPage extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    const Text(
-                                      'hiUser',
-                                      style: TextStyle(
+                                    Text(
+                                      snapshot.data!.name!,
+                                      style: const TextStyle(
                                           fontSize: 17,
                                           fontWeight: FontWeight.bold),
-                                    ).tr(args: [snapshot.data!.name!]),
+                                    ),
                                     const SizedBox(
                                       height: 8,
                                     ),

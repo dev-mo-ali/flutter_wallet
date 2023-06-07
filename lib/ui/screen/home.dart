@@ -5,7 +5,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sun_point/logic/controllers/home.dart';
 import 'package:sun_point/logic/models/home.dart';
 import 'package:sun_point/ui/screen/drawer_page.dart';
+import 'package:sun_point/ui/screen/wallet/user_balance.dart';
 import 'package:sun_point/ui/widgets/bottom_bar.dart';
+import 'package:sun_point/ui/widgets/contact_us.dart';
 import 'package:sun_point/ui/widgets/side_bar_header.dart';
 import 'package:sun_point/utils/routes.dart';
 import 'package:sun_point/utils/ui/constant.dart';
@@ -241,12 +243,24 @@ class _HomePageState extends State<HomePage> {
     List<ModelServices> listServices = [];
 
     listServices
-        .add(ModelServices(title: "QR", img: 'qr', route: Routes.showQR));
+        .add(ModelServices(title: "QR", img: 'qr', route: Routes.enterPIN));
     listServices.add(ModelServices(title: "Transfer", img: 'transfer'));
     listServices
         .add(ModelServices(title: "Top Up", img: 'topup', route: Routes.topUp));
-    listServices.add(ModelServices(title: "Exchange", img: 'exchange'));
+    listServices.add(ModelServices(
+        title: "Withdraw", img: 'withdraw', route: Routes.withdraw));
+    listServices.add(ModelServices(
+        title: "Exchange",
+        img: 'exchange',
+        onClick: () => showDialog(
+            context: context, builder: (_) => const ContactUsDialog())));
     listServices.add(ModelServices(title: "Network", img: 'network'));
+    listServices.add(ModelServices(
+      title: "My Balance",
+      img: 'balance',
+      onClick: () => showDialog(
+          context: context, builder: (_) => const UserBalanceDialog()),
+    ));
     listServices.add(ModelServices(title: "More Options", img: 'menu'));
 
     return Padding(
@@ -265,6 +279,8 @@ class _HomePageState extends State<HomePage> {
               onTap: () {
                 if (value.route != null) {
                   Navigator.of(context).pushNamed(value.route!);
+                } else if (value.onClick != null) {
+                  value.onClick!();
                 }
               },
               child: Column(
@@ -302,7 +318,9 @@ class _HomePageState extends State<HomePage> {
 }
 
 class ModelServices {
-  String title, img;
-  String? route;
-  ModelServices({required this.title, required this.img, this.route});
+  final String title, img;
+  final String? route;
+  final void Function()? onClick;
+  ModelServices(
+      {required this.title, required this.img, this.route, this.onClick});
 }

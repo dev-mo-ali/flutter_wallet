@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sun_point/ui/screen/account/account.dart';
+import 'package:sun_point/ui/screen/auth/enter_pin.dart';
 import 'package:sun_point/ui/screen/profile/account_info.dart';
 import 'package:sun_point/ui/screen/account/reset_tpin1.dart';
 import 'package:sun_point/ui/screen/account/reset_tpin2.dart';
@@ -32,6 +33,7 @@ import 'package:sun_point/ui/screen/profile/update_phone3.dart';
 import 'package:sun_point/ui/screen/wallet/history.dart';
 import 'package:sun_point/ui/screen/wallet/top_up.dart';
 import 'package:sun_point/ui/screen/wallet/transaction.dart';
+import 'package:sun_point/ui/screen/wallet/withdraw.dart';
 
 class Routes {
   static const startUp = '/';
@@ -67,6 +69,8 @@ class Routes {
   static const topUp = '/topUp';
   static const history = '/history';
   static const transaction = '/transaction';
+  static const enterPIN = '/enterPIN';
+  static const withdraw = '/withdraw';
 
   static Route? generate(RouteSettings settings) {
     switch (settings.name) {
@@ -152,7 +156,7 @@ class Routes {
                   args: args,
                 ));
       case topUp:
-        return MaterialPageRoute(builder: (_) => const TopUpPage());
+        return MaterialPageRoute(builder: (_) => TopUpPage());
       case history:
         return MaterialPageRoute(builder: (_) => HistoryPage());
       case transaction:
@@ -161,6 +165,10 @@ class Routes {
             builder: (_) => TransactionPage(
                   args: args,
                 ));
+      case enterPIN:
+        return MaterialPageRoute(builder: (_) => EnterPINPage());
+      case withdraw:
+        return MaterialPageRoute(builder: (_) => WithdrawPage());
     }
     return null;
   }

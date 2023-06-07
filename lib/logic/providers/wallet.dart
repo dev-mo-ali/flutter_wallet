@@ -55,27 +55,31 @@ class WalletAPI {
     return response;
   }
 
-  static Future<List> getEstimatedReloadWP(double amount) async {
+  static Future<ServerResponse> getEstimatedTopupPoints(double amount) async {
     ServerResponse response =
-        await Server.send(http.post, 'user/get_estimated_reload_wp', body: {
+        await Server.send(http.post, 'user/get_topup_estimated_points', body: {
       'amount': amount,
     });
-    return [response, amount];
+    return response;
   }
 
-  static Future<ServerResponse> topUpCheck(
-      bool isVoucher, String voucherCode) async {
-    ServerResponse response = await Server.send(http.post, 'user/top_up_check',
-        body: {'is_voucher': isVoucher, "voucher_code": voucherCode});
+  static Future<ServerResponse> topUpCheckVoucher(String voucherCode) async {
+    ServerResponse response = await Server.send(
+        http.post, 'user/topup_check_voucher',
+        body: {'is_voucher': true, "voucher_code": voucherCode});
     return response;
   }
 
   static Future<ServerResponse> topUp(
-    num amount,
+    double? amount,
+    bool isVoucher,
+    String voucherCode,
   ) async {
-    ServerResponse response =
-        await Server.send(http.post, 'user/create_topup_request', body: {
+    ServerResponse response = await Server.send(
+        http.post, 'user/create_topup_request', body: {
       'amount': amount,
+      'is_voucher': isVoucher,
+      "voucher_code": voucherCode
     });
     return response;
   }

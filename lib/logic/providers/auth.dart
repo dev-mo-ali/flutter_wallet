@@ -168,6 +168,16 @@ class AuthAPI {
     return response;
   }
 
+  static Future<ServerResponse> checkPIN(
+    String pin,
+  ) async {
+    ServerResponse response =
+        await Server.send(http.post, 'user/check_pin', body: {
+      'tpin': pin,
+    });
+    return response;
+  }
+
   static Future<ServerResponse> updateIdImage(
       String username, String idImg, String idNumber, String idType) async {
     ServerResponse response =

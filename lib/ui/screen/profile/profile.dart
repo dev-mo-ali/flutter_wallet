@@ -4,6 +4,7 @@ import 'package:sun_point/ui/screen/drawer_page.dart';
 import 'package:sun_point/ui/widgets/bottom_bar.dart';
 import 'package:sun_point/ui/widgets/lang_dialog.dart';
 import 'package:sun_point/ui/widgets/side_bar_header.dart';
+import 'package:sun_point/ui/widgets/soon_dialog.dart';
 import 'package:sun_point/utils/auth.dart';
 import 'package:sun_point/utils/routes.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -47,23 +48,19 @@ class ProfilePage extends StatelessWidget {
                                       child: Container(
                                         width: 60,
                                         height: 60,
-                                        decoration: const BoxDecoration(),
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                              width: 2,
+                                              color: Theme.of(context)
+                                                  .iconTheme
+                                                  .color!),
+                                          borderRadius:
+                                              BorderRadius.circular(1000),
+                                        ),
                                         child: snapshot.data!.avatar == null
-                                            ? Container(
-                                                decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      width: 2,
-                                                      color: Theme.of(context)
-                                                          .iconTheme
-                                                          .color!),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          1000),
-                                                ),
-                                                child: const Icon(
-                                                  Icons.person_outlined,
-                                                  size: 45,
-                                                ),
+                                            ? const Icon(
+                                                Icons.person_outlined,
+                                                size: 45,
                                               )
                                             : Image.network(
                                                 snapshot.data!.avatar!,
@@ -166,6 +163,32 @@ class ProfilePage extends StatelessWidget {
                                   ),
                                   Text(
                                     'Change Phone Number',
+                                    style:
+                                        Theme.of(context).textTheme.labelLarge,
+                                  ).tr()
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 4,
+                        ),
+                        InkWell(
+                          onTap: () => showDialog(
+                              context: context,
+                              builder: (_) => const SoonDialog()),
+                          child: Card(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: [
+                                  const Icon(Icons.email_outlined),
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(
+                                    'Change Email',
                                     style:
                                         Theme.of(context).textTheme.labelLarge,
                                   ).tr()

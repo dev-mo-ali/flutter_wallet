@@ -63,6 +63,10 @@ ThemeData lightTheme() => ThemeData(
           borderRadius: BorderRadius.circular(16),
           borderSide: const BorderSide(color: Colors.blueGrey),
         ),
+        disabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: Colors.blueGrey.shade100),
+        ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide(color: Colors.blueGrey.shade800),
@@ -82,6 +86,10 @@ ThemeData lightTheme() => ThemeData(
       ),
       scaffoldBackgroundColor: AppColors.background,
       radioTheme: const RadioThemeData(
+        overlayColor: MaterialStatePropertyAll(Color(0xFF3A4276)),
+        fillColor: MaterialStatePropertyAll(Color(0xFF3A4276)),
+      ),
+      checkboxTheme: const CheckboxThemeData(
         overlayColor: MaterialStatePropertyAll(Color(0xFF3A4276)),
         fillColor: MaterialStatePropertyAll(Color(0xFF3A4276)),
       ),
@@ -207,6 +215,10 @@ ThemeData darkTheme() => ThemeData(
           borderRadius: BorderRadius.circular(16),
           borderSide: const BorderSide(color: Colors.blueGrey),
         ),
+        disabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: Colors.blueGrey.shade900),
+        ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide(color: Colors.blueGrey.shade800),
@@ -226,6 +238,10 @@ ThemeData darkTheme() => ThemeData(
       ),
       scaffoldBackgroundColor: AppColors.backgroundDark,
       radioTheme: const RadioThemeData(
+        overlayColor: MaterialStatePropertyAll(Color(0xff7b7f9e)),
+        fillColor: MaterialStatePropertyAll(Color(0xff7b7f9e)),
+      ),
+      checkboxTheme: const CheckboxThemeData(
         overlayColor: MaterialStatePropertyAll(Color(0xff7b7f9e)),
         fillColor: MaterialStatePropertyAll(Color(0xff7b7f9e)),
       ),
@@ -288,9 +304,12 @@ ThemeData darkTheme() => ThemeData(
           color: Colors.white,
           fontWeight: FontWeight.w500,
         ),
-      ), colorScheme: ColorScheme.fromSwatch().copyWith(
-          brightness: Brightness.dark,
-          primary: const Color(0xff7b7f9e),
-          secondary: AppColors.backgroundDark,
-          outline: Colors.grey.shade300).copyWith(background: AppColors.backgroundDark),
+      ),
+      colorScheme: ColorScheme.fromSwatch()
+          .copyWith(
+              brightness: Brightness.dark,
+              primary: const Color(0xff7b7f9e),
+              secondary: AppColors.backgroundDark,
+              outline: Colors.grey.shade300)
+          .copyWith(background: AppColors.backgroundDark),
     );

@@ -62,7 +62,7 @@ class _DrawerPageState extends State<DrawerPage> with TickerProviderStateMixin {
                               return const SizedBox();
                             }
                             return Container(
-                              height: 120,
+                              padding: const EdgeInsets.only(top: 45),
                               width: MediaQuery.of(context).size.width * 0.6,
                               decoration: const BoxDecoration(
                                 borderRadius: BorderRadius.only(
@@ -74,27 +74,21 @@ class _DrawerPageState extends State<DrawerPage> with TickerProviderStateMixin {
                                   children: [
                                     Container(
                                       decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          border: Border.all(
-                                              color: const Color(0xffD8D9E4))),
+                                        border: Border.all(
+                                            width: 1.4,
+                                            color: Theme.of(context)
+                                                .iconTheme
+                                                .color!),
+                                        borderRadius:
+                                            BorderRadius.circular(1000),
+                                      ),
                                       child: ClipRRect(
                                         borderRadius:
                                             BorderRadius.circular(1000),
                                         child: snap.data!.avatar == null
-                                            ? Container(
-                                                padding:
-                                                    const EdgeInsets.all(4),
-                                                decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      width: 1.4,
-                                                      color: Theme.of(context)
-                                                          .iconTheme
-                                                          .color!),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          1000),
-                                                ),
-                                                child: const Icon(
+                                            ? const Padding(
+                                                padding: EdgeInsets.all(4),
+                                                child: Icon(
                                                   Icons.person_outlined,
                                                   size: 25,
                                                 ),
@@ -138,9 +132,12 @@ class _DrawerPageState extends State<DrawerPage> with TickerProviderStateMixin {
                           })
                     ],
                   ),
+                  const SizedBox(
+                    height: 16,
+                  ),
                   Expanded(
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         navigatorTitle("Home", Routes.home),
                         navigatorTitle("Profile", Routes.profile),
@@ -247,7 +244,7 @@ class _DrawerPageState extends State<DrawerPage> with TickerProviderStateMixin {
               Builder(builder: (context) {
                 return Positioned(
                   right: 0,
-                  top: 20,
+                  top: 29,
                   child: (sideBarActive)
                       ? IconButton(
                           padding: const EdgeInsets.all(30),

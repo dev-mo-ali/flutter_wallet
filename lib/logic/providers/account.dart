@@ -102,4 +102,10 @@ class AccountAPI {
     });
     return response;
   }
+
+  static Future<ServerResponse> getProfile() async {
+    ServerResponse response =
+        await Server.send(http.post, 'user/get_user_profile');
+    return response;
+  }
 }
