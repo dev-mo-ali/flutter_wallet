@@ -50,7 +50,7 @@ class WalletAPI {
 
   static Future<ServerResponse> getTopUpConfig() async {
     ServerResponse response =
-        await Server.send(http.post, 'user/get_reload_config');
+        await Server.send(http.post, 'user/get_topup_config');
 
     return response;
   }
@@ -110,28 +110,19 @@ class WalletAPI {
   }
 
   static Future<ServerResponse> withdraw(
-      num amount, String address, num fees, String tpin) async {
-    ServerResponse response = await Server.send(
-        http.post, 'user/create_withdrawal_cash_request',
-        body: {
-          'amount': amount,
-          'withdrawal_fees': fees,
-          "wallet_address": address,
-          "tpin": tpin
-        });
+      num amount, int bankID, String accountNumber, String holderName) async {
+    ServerResponse response =
+        await Server.send(http.post, 'user/create_withdrawal_request', body: {
+      'amount': amount,
+      "bank_id": bankID,
+      'bank_account_number': accountNumber,
+      'bank_holder_name': holderName
+    });
     return response;
   }
 
   static Future<ServerResponse> getTransactions(
       int userWalletID, int page) async {
-    // String data = await rootBundle.loadString('assets/mocks/history.json');
-    // ServerResponse response = ServerResponse.fromDio(Response(
-    //     requestOptions: RequestOptions(),
-    //     statusCode: 200,
-    //     data: jsonDecode(data),
-    //     headers: Headers.fromMap({
-    //       "Content-Type": ["application/json"]
-    //     })));
     ServerResponse response = await Server.sendDio('user/get_transactions',
         body: {'user_wallet_id': userWalletID, 'page': page});
     return response;
@@ -145,49 +136,60 @@ class WalletAPI {
     return response;
   }
 
-  static Future<ServerResponse> cancelTopupRequest(String ref) async {
+  static Future<ServerResponse> cancelTopupRequest(int id) async {
     ServerResponse response =
         await Server.send(http.post, 'user/cancel_topup_request', body: {
-      'ref': ref,
+      'id': id,
     });
     return response;
   }
 
-  static Future<ServerResponse> cancelWithdrawalRequest(String ref) async {
+  static Future<ServerResponse> cancelWithdrawalRequest(int id) async {
     ServerResponse response =
         await Server.send(http.post, 'user/cancel_withdrawal_request', body: {
-      'ref': ref,
+      'id': id,
     });
-    return response;
-  }
-
-  static Future<ServerResponse> cancelReceiveRequest(String ref) async {
-    ServerResponse response =
-        await Server.send(http.post, 'user/cancel_request', body: {
-      'ref': ref,
-    });
-    return response;
-  }
-
-  static Future<ServerResponse> rejectReceiveRequest(String ref) async {
-    ServerResponse response =
-        await Server.send(http.post, 'user/reject_request', body: {
-      'ref': ref,
-    });
-    return response;
-  }
-
-  static Future<ServerResponse> approveReceiveRequest(
-      String ref, String tpin) async {
-    ServerResponse response = await Server.send(
-        http.post, 'user/accept_request',
-        body: {'ref': ref, 'tpin': tpin});
     return response;
   }
 
   static Future<ServerResponse> getReloadWallet() async {
     ServerResponse response =
         await Server.send(http.post, 'user/get_reload_wallet');
+    return response;
+  }
+
+  static Future<ServerResponse> getBanks() async {
+    ServerResponse response = await Server.send(http.post, 'user/get_banks');
+    return response;
+  }
+
+  static Future<ServerResponse> getWithdrawRequests(int page) async {
+    ServerResponse response = await Server.send(
+        http.post, 'user/get_withdrawal_requests',
+        body: {'page': page});
+    return response;
+  }
+
+  static Future<ServerResponse> getTopupRequests(int page) async {
+    ServerResponse response = await Server.send(
+        http.post, 'user/get_topup_requests',
+        body: {'page': page});
+    return response;
+  }
+
+  static Future<ServerResponse> getWithdrawRequest(int id) async {
+    ServerResponse response =
+        await Server.send(http.post, 'user/get_withdrawal_request', body: {
+      'id': id,
+    });
+    return response;
+  }
+
+  static Future<ServerResponse> getTopupRequest(int id) async {
+    ServerResponse response =
+        await Server.send(http.post, 'user/get_topup_request', body: {
+      'id': id,
+    });
     return response;
   }
 }

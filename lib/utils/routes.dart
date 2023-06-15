@@ -30,10 +30,14 @@ import 'package:sun_point/ui/screen/profile/profile.dart';
 import 'package:sun_point/ui/screen/profile/update_phone1.dart';
 import 'package:sun_point/ui/screen/profile/update_phone2.dart';
 import 'package:sun_point/ui/screen/profile/update_phone3.dart';
+import 'package:sun_point/ui/screen/wallet/topup_request.dart';
 import 'package:sun_point/ui/screen/wallet/history.dart';
 import 'package:sun_point/ui/screen/wallet/top_up.dart';
+import 'package:sun_point/ui/screen/wallet/topup_requests.dart';
 import 'package:sun_point/ui/screen/wallet/transaction.dart';
 import 'package:sun_point/ui/screen/wallet/withdraw.dart';
+import 'package:sun_point/ui/screen/wallet/withdraw_request.dart';
+import 'package:sun_point/ui/screen/wallet/withdraw_requests.dart';
 
 class Routes {
   static const startUp = '/';
@@ -71,6 +75,10 @@ class Routes {
   static const transaction = '/transaction';
   static const enterPIN = '/enterPIN';
   static const withdraw = '/withdraw';
+  static const withdrawRequests = '/withdrawRequests';
+  static const withdrawRequest = '/withdrawRequest';
+  static const topupRequests = '/topupRequests';
+  static const topupRequest = '/topupRequest';
 
   static Route? generate(RouteSettings settings) {
     switch (settings.name) {
@@ -169,6 +177,22 @@ class Routes {
         return MaterialPageRoute(builder: (_) => EnterPINPage());
       case withdraw:
         return MaterialPageRoute(builder: (_) => WithdrawPage());
+      case withdrawRequests:
+        return MaterialPageRoute(builder: (_) => WithdrawRequestsPage());
+      case withdrawRequest:
+        var args = settings.arguments as WithdrawRequestArgs;
+        return MaterialPageRoute(
+            builder: (_) => WithdrawRequestPage(
+                  args: args,
+                ));
+      case topupRequests:
+        return MaterialPageRoute(builder: (_) => TopupRequestsPage());
+      case topupRequest:
+        var args = settings.arguments as TopupRequestArgs;
+        return MaterialPageRoute(
+            builder: (_) => TopupRequestPage(
+                  args: args,
+                ));
     }
     return null;
   }

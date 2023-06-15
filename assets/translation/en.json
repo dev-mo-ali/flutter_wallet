@@ -206,6 +206,15 @@
     "Bank Details:":"Bank Details:",
     "Select your bank":"Select your bank",
     "Account Number":"Account Number",
-    "Holder Name":"Holder Name"    
+    "Holder Name":"Holder Name",
+    "range":"Range: {} - {}",
+    "INSUFFICIENT_BALANCE":"Sorry, you don't have enough balance",
+    "INVALID_TIME":"Sorry, this service isn't available for now, try again later.",
+    "Bank":"Bank",
+    "My Requests":"My Requests",
+    "Topup":"Topup",
+    "FAQ":"FAQ",
+    "T&C":"T&C"
+     
     
 }

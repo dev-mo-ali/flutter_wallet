@@ -7,6 +7,9 @@ import 'package:sun_point/logic/controllers/drawer.dart';
 import 'package:sun_point/ui/widgets/yes_no_dialog.dart';
 import 'package:sun_point/utils/auth.dart';
 import 'package:sun_point/utils/routes.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+enum NavigatorTitleType { appScreen, webPage }
 
 class DrawerPage extends StatefulWidget {
   final Widget child;
@@ -139,13 +142,22 @@ class _DrawerPageState extends State<DrawerPage> with TickerProviderStateMixin {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        navigatorTitle("Home", Routes.home),
-                        navigatorTitle("Profile", Routes.profile),
-                        navigatorTitle("Account", Routes.account),
-                        navigatorTitle("Transactions", Routes.history),
-                        navigatorTitle("Stats", ""),
-                        navigatorTitle("Settings", ""),
-                        navigatorTitle("Help", ""),
+                        navigatorTitle(
+                            "Home", Routes.home, NavigatorTitleType.appScreen),
+                        navigatorTitle("Profile", Routes.profile,
+                            NavigatorTitleType.appScreen),
+                        navigatorTitle("Account", Routes.account,
+                            NavigatorTitleType.appScreen),
+                        navigatorTitle("Transactions", Routes.history,
+                            NavigatorTitleType.appScreen),
+                        navigatorTitle(
+                            "Stats", "", NavigatorTitleType.appScreen),
+                        navigatorTitle(
+                            "Settings", "", NavigatorTitleType.appScreen),
+                        navigatorTitle("FAQ", "https://worldpoint2u.com/",
+                            NavigatorTitleType.webPage),
+                        navigatorTitle("T&C", "https://worldpoint2u.com/",
+                            NavigatorTitleType.webPage),
                       ],
                     ),
                   ),
@@ -266,10 +278,18 @@ class _DrawerPageState extends State<DrawerPage> with TickerProviderStateMixin {
     );
   }
 
-  Widget navigatorTitle(String name, String route) {
+  Widget navigatorTitle(String name, String route, NavigatorTitleType type) {
     return InkWell(
-      onTap: () => Navigator.of(context)
-          .pushNamedAndRemoveUntil(route, (route) => false),
+      onTap: () {
+        if (type == NavigatorTitleType.appScreen) {
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil(route, (route) => false);
+        }
+        if (type == NavigatorTitleType.webPage) {
+          Uri uri = Uri.parse(route);
+          launchUrl(uri, mode: LaunchMode.inAppWebView);
+        }
+      },
       child: Row(
         children: [
           (widget.current == route)

@@ -5,10 +5,24 @@ import 'package:sun_point/server/response.dart';
 import 'package:sun_point/utils/validators.dart';
 
 class TopUpCubit extends Cubit<TopUpState> {
-  TopUpCubit() : super(TopUpState());
+  TopUpCubit() : super(TopUpState()) {
+    load().then((value) => null);
+  }
   String amount = '';
   void setIsVoucher(bool value) {
     emit(state.copyWith(isVoucher: value, amount: 0));
+  }
+
+  Future<void> load() async {
+    emit(state.copyWith(loading: true));
+
+    ServerResponse response = await WalletAPI.getTopUpConfig();
+    if (response.isSuccess) {
+      emit(state.copyWith(loading: false, config: response.data));
+    } else {
+      emit(state.copyWith(loading: false));
+      emit(state.copyWith(error: ''));
+    }
   }
 
   void getAmount(String amount) async {
@@ -35,8 +49,8 @@ class TopUpCubit extends Cubit<TopUpState> {
   }
 
   void submit(String amountStr, String voucherCode) async {
-    if (!state.loading) {
-      emit(state.copyWith(loading: true));
+    if (!state.submitting) {
+      emit(state.copyWith(submitting: true));
       double? amount = double.tryParse(amountStr);
       if (state.isVoucher) {
         ServerResponse rs = await WalletAPI.topUpCheckVoucher(voucherCode);
@@ -44,7 +58,7 @@ class TopUpCubit extends Cubit<TopUpState> {
         if (rs.isSuccess) {
           amount = rs.data['amount'];
         } else {
-          emit(state.copyWith(loading: false, error: rs.code.code));
+          emit(state.copyWith(submitting: false, error: rs.code.code));
           emit(state.copyWith(error: ''));
           return;
         }
@@ -54,9 +68,9 @@ class TopUpCubit extends Cubit<TopUpState> {
           await WalletAPI.topUp(amount, state.isVoucher, voucherCode);
       if (response.isSuccess) {
         emit(state.copyWith(
-            done: true, amount: amount, loading: false, error: ''));
+            done: true, amount: amount, submitting: false, error: ''));
       } else {
-        emit(state.copyWith(loading: false, error: response.code.code));
+        emit(state.copyWith(submitting: false, error: response.code.code));
         emit(state.copyWith(error: ''));
       }
     }

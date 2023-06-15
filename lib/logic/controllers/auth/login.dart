@@ -34,6 +34,7 @@ class LoginCubit extends Cubit<LoginState> {
 
       ServerResponse response =
           await AuthAPI.login(state.countryCode + number, password, imei);
+      print(response.response.body);
       if (response.isSuccess) {
         // set user data
         await User.setUser(response.data as Map);
