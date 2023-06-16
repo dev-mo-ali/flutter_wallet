@@ -71,9 +71,9 @@ class _DrawerPageState extends State<DrawerPage> with TickerProviderStateMixin {
                                 borderRadius: BorderRadius.only(
                                     bottomRight: Radius.circular(60)),
                               ),
-                              child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 5),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Container(
                                       decoration: BoxDecoration(
@@ -282,8 +282,7 @@ class _DrawerPageState extends State<DrawerPage> with TickerProviderStateMixin {
     return InkWell(
       onTap: () {
         if (type == NavigatorTitleType.appScreen) {
-          Navigator.of(context)
-              .pushNamedAndRemoveUntil(route, (route) => false);
+          Navigator.of(context).pushNamed(route);
         }
         if (type == NavigatorTitleType.webPage) {
           Uri uri = Uri.parse(route);

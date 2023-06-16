@@ -108,4 +108,12 @@ class AccountAPI {
         await Server.send(http.post, 'user/get_user_profile');
     return response;
   }
+  
+  static Future<ServerResponse> getUserByQr(String qr) async {
+    ServerResponse response =
+        await Server.send(http.post, 'user/check_contact_qr', body: {
+      'qr': qr,
+    });
+    return response;
+  }
 }

@@ -117,58 +117,63 @@ class TopupRequestPage extends StatelessWidget {
                                   'Status',
                                   style: Theme.of(context).textTheme.labelLarge,
                                 ).tr(),
-                                Builder(builder: (context) {
-                                  switch (state.data!['status']) {
-                                    case TopupRequestsState.STATUS_APPROVED:
-                                    case TopupRequestsState.STATUS_COMPLETED:
-                                      return Text(
-                                        'Completed',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelLarge
-                                            ?.copyWith(
-                                                fontSize: 15,
-                                                color: Colors
-                                                    .greenAccent.shade700),
-                                      ).tr();
+                                BlocSelector<TopupRequestCubit,
+                                        TopupRequestState, String>(
+                                    selector: (state) => state.status!,
+                                    builder: (context, state) {
+                                      switch (state) {
+                                        case TopupRequestsState.STATUS_APPROVED:
+                                        case TopupRequestsState
+                                              .STATUS_COMPLETED:
+                                          return Text(
+                                            'Completed',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelLarge
+                                                ?.copyWith(
+                                                    fontSize: 15,
+                                                    color: Colors
+                                                        .greenAccent.shade700),
+                                          ).tr();
 
-                                    case TopupRequestsState.STATUS_PENDING:
-                                      return Text(
-                                        'Pending',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelLarge
-                                            ?.copyWith(
-                                                fontSize: 15,
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .primary),
-                                      ).tr();
+                                        case TopupRequestsState.STATUS_PENDING:
+                                          return Text(
+                                            'Pending',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelLarge
+                                                ?.copyWith(
+                                                    fontSize: 15,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primary),
+                                          ).tr();
 
-                                    case TopupRequestsState.STATUS_CANCELLED:
-                                      return Text(
-                                        'Cancelled',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelLarge
-                                            ?.copyWith(
-                                                fontSize: 15,
-                                                color: Colors.red.shade700),
-                                      ).tr();
+                                        case TopupRequestsState
+                                              .STATUS_CANCELLED:
+                                          return Text(
+                                            'Cancelled',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelLarge
+                                                ?.copyWith(
+                                                    fontSize: 15,
+                                                    color: Colors.red.shade700),
+                                          ).tr();
 
-                                    case TopupRequestsState.STATUS_REJECTED:
-                                      return Text(
-                                        'Rejected',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelLarge
-                                            ?.copyWith(
-                                                fontSize: 15,
-                                                color: Colors.red.shade700),
-                                      ).tr();
-                                  }
-                                  return const SizedBox();
-                                }),
+                                        case TopupRequestsState.STATUS_REJECTED:
+                                          return Text(
+                                            'Rejected',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelLarge
+                                                ?.copyWith(
+                                                    fontSize: 15,
+                                                    color: Colors.red.shade700),
+                                          ).tr();
+                                      }
+                                      return const SizedBox();
+                                    }),
                               ],
                             ),
                           ),

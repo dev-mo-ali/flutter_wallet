@@ -191,7 +191,7 @@
     "Voucher Code":"Voucher Code",
     "You will receive":"You will receive",
     "INVALID_VOUCHER_CODE":"Invalid Voucher Code",
-    "INVALID_AMOUNT":"Invalid Requested Amount",
+    "INVALID_AMOUNT":"Invalid Amount",
     "INVALID_VOUCHER":"Invalid Voucher",
     "topUpSucc":"Your top up request was submitted successfully.",
     "withdrawSucc":"Your withdraw request was submitted successfully.",
@@ -214,7 +214,11 @@
     "My Requests":"My Requests",
     "Topup":"Topup",
     "FAQ":"FAQ",
-    "T&C":"T&C"
-     
-    
+    "T&C":"T&C",
+    "TRANSFERTitle":"TRANSFER",
+    "transferSum":"Transfer from your account to another account",
+    "Receiver Phone Number":"Receiver Phone Number",
+    "INVALID_QR":"Invalid QR Code",
+    "TRANSFER_TO_SELF":"Transfer to yourselves is not allowed",
+    "Scan QR":"Scan QR"   
 }

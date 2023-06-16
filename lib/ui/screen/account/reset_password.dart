@@ -12,7 +12,7 @@ import 'package:sun_point/utils/validators.dart';
 
 class ResetPasswordPage extends StatelessWidget {
   ResetPasswordPage({super.key});
- final  TextEditingController password = TextEditingController(),
+  final TextEditingController password = TextEditingController(),
       newPassword = TextEditingController(),
       confPassword = TextEditingController();
 
@@ -134,8 +134,12 @@ class ResetPasswordPage extends StatelessWidget {
                       const SizedBox(
                         height: 8,
                       ),
-                      const Text(
+                      Text(
                         'Enter sign in password',
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelMedium!
+                            .copyWith(fontSize: 16),
                       ).tr(),
                       const SizedBox(
                         height: 16,
@@ -149,8 +153,12 @@ class ResetPasswordPage extends StatelessWidget {
                       const SizedBox(
                         height: 64,
                       ),
-                      const Text(
+                      Text(
                         'Enter your new password',
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelMedium!
+                            .copyWith(fontSize: 16),
                       ).tr(),
                       const SizedBox(
                         height: 16,

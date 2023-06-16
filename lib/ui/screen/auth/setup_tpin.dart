@@ -112,6 +112,7 @@ class SetupTPINPage extends StatelessWidget {
                             controller: e['controller'],
                             focusNode: e['node'],
                             maxLength: 1,
+                            obscureText: true,
                             textAlign: TextAlign.center,
                             keyboardType: TextInputType.number,
                             inputFormatters: [

@@ -54,8 +54,8 @@ class UserBalanceDialog extends StatelessWidget {
                 ),
                 Center(
                   child: Container(
-                      width: 120,
-                      height: 120,
+                      width: 80,
+                      height: 80,
                       padding: const EdgeInsets.all(15).copyWith(top: 24),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(1000),
@@ -72,7 +72,10 @@ class UserBalanceDialog extends StatelessWidget {
                 ),
                 Text(
                   'Your Balance Is',
-                  style: Theme.of(context).textTheme.displayMedium,
+                  style: Theme.of(context)
+                      .textTheme
+                      .displayMedium!
+                      .copyWith(fontSize: 18),
                 ).tr(),
                 Text(
                   state.balance!,

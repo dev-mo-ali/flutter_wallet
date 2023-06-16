@@ -10,9 +10,9 @@ import 'package:sun_point/utils/routes.dart';
 import 'package:sun_point/utils/validators.dart';
 
 class WithdrawPage extends StatelessWidget {
-  final TextEditingController amount = TextEditingController(text: '111'),
-      accountNumber = TextEditingController(text: '123'),
-      holderName = TextEditingController(text: 'user');
+  final TextEditingController amount = TextEditingController(),
+      accountNumber = TextEditingController(),
+      holderName = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey();
 
   WithdrawPage({super.key});
@@ -37,7 +37,10 @@ class WithdrawPage extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context).pushNamed(Routes.withdrawRequests);
                   },
-                  child: const Text("My Requests").tr())
+                  child: const Text(
+                    "My Requests",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ).tr())
             ],
           ),
           body: BlocBuilder<WithdrawCubit, WithdrawState>(

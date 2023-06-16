@@ -10,27 +10,12 @@ class WalletAPI {
     return response;
   }
 
-  static Future<ServerResponse> checkTransfer(
-      int walletConfigID, int receiverID, double amount) async {
+  static Future<ServerResponse> transferCredit(
+      String phone, double amount) async {
     ServerResponse response =
-        await Server.send(http.post, 'user/transfer_check', body: {
-      'transactions': [
-        {'user_id': receiverID, 'amount': amount}
-      ],
-      'wallet_config_id': walletConfigID
-    });
-    return response;
-  }
-
-  static Future<ServerResponse> transfer(
-      int walletConfigID, int receiverID, double amount, String tpin) async {
-    ServerResponse response =
-        await Server.send(http.post, 'user/request_transfer', body: {
-      'transactions': [
-        {'user_id': receiverID, 'amount': amount}
-      ],
-      'wallet_config_id': walletConfigID,
-      "tpin": tpin
+        await Server.send(http.post, 'user/transfer_credit', body: {
+      'username': phone,
+      'amount': amount,
     });
     return response;
   }
@@ -51,6 +36,13 @@ class WalletAPI {
   static Future<ServerResponse> getTopUpConfig() async {
     ServerResponse response =
         await Server.send(http.post, 'user/get_topup_config');
+
+    return response;
+  }
+
+  static Future<ServerResponse> getTransferConfig() async {
+    ServerResponse response =
+        await Server.send(http.post, 'user/get_transfer_config');
 
     return response;
   }

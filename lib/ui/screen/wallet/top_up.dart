@@ -35,7 +35,10 @@ class TopUpPage extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context).pushNamed(Routes.topupRequests);
                   },
-                  child: const Text("My Requests").tr())
+                  child: const Text(
+                    "My Requests",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ).tr())
             ],
           ),
           body: BlocBuilder<TopUpCubit, TopUpState>(

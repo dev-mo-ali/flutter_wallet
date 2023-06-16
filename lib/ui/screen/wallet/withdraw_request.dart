@@ -117,57 +117,64 @@ class WithdrawRequestPage extends StatelessWidget {
                                   'Status',
                                   style: Theme.of(context).textTheme.labelLarge,
                                 ).tr(),
-                                Builder(builder: (context) {
-                                  switch (state.data!['status']) {
-                                    case WithdrawRequestsState.STATUS_COMPLETED:
-                                      return Text(
-                                        'Completed',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelLarge
-                                            ?.copyWith(
-                                                fontSize: 15,
-                                                color: Colors
-                                                    .greenAccent.shade700),
-                                      ).tr();
+                                BlocSelector<WithdrawRequestCubit,
+                                        WithdrawRequestState, String>(
+                                    selector: (state) => state.status!,
+                                    builder: (context, state) {
+                                      switch (state) {
+                                        case WithdrawRequestsState
+                                              .STATUS_COMPLETED:
+                                          return Text(
+                                            'Completed',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelLarge
+                                                ?.copyWith(
+                                                    fontSize: 15,
+                                                    color: Colors
+                                                        .greenAccent.shade700),
+                                          ).tr();
 
-                                    case WithdrawRequestsState.STATUS_PENDING:
-                                      return Text(
-                                        'Pending',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelLarge
-                                            ?.copyWith(
-                                                fontSize: 15,
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .primary),
-                                      ).tr();
+                                        case WithdrawRequestsState
+                                              .STATUS_PENDING:
+                                          return Text(
+                                            'Pending',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelLarge
+                                                ?.copyWith(
+                                                    fontSize: 15,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primary),
+                                          ).tr();
 
-                                    case WithdrawRequestsState.STATUS_CANCELLED:
-                                      return Text(
-                                        'Cancelled',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelLarge
-                                            ?.copyWith(
-                                                fontSize: 15,
-                                                color: Colors.red.shade700),
-                                      ).tr();
+                                        case WithdrawRequestsState
+                                              .STATUS_CANCELLED:
+                                          return Text(
+                                            'Cancelled',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelLarge
+                                                ?.copyWith(
+                                                    fontSize: 15,
+                                                    color: Colors.red.shade700),
+                                          ).tr();
 
-                                    case WithdrawRequestsState.STATUS_REJECTED:
-                                      return Text(
-                                        'Rejected',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelLarge
-                                            ?.copyWith(
-                                                fontSize: 15,
-                                                color: Colors.red.shade700),
-                                      ).tr();
-                                  }
-                                  return const SizedBox();
-                                }),
+                                        case WithdrawRequestsState
+                                              .STATUS_REJECTED:
+                                          return Text(
+                                            'Rejected',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelLarge
+                                                ?.copyWith(
+                                                    fontSize: 15,
+                                                    color: Colors.red.shade700),
+                                          ).tr();
+                                      }
+                                      return const SizedBox();
+                                    }),
                               ],
                             ),
                           ),

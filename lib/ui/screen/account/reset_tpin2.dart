@@ -168,6 +168,7 @@ class ResetTPIN2Page extends StatelessWidget {
                               child: TextField(
                                 controller: e['controller'],
                                 focusNode: e['node'],
+                                obscureText: true,
                                 maxLength: 1,
                                 textAlign: TextAlign.center,
                                 keyboardType: TextInputType.number,

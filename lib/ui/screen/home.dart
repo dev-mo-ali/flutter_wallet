@@ -244,7 +244,8 @@ class _HomePageState extends State<HomePage> {
 
     listServices
         .add(ModelServices(title: "QR", img: 'qr', route: Routes.enterPIN));
-    listServices.add(ModelServices(title: "Transfer", img: 'transfer'));
+    listServices.add(ModelServices(
+        title: "Transfer", img: 'transfer', route: Routes.transfer));
     listServices
         .add(ModelServices(title: "Top Up", img: 'topup', route: Routes.topUp));
     listServices.add(ModelServices(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sun_point/ui/screen/account/account.dart';
+import 'package:sun_point/ui/screen/account/scan_qr.dart';
 import 'package:sun_point/ui/screen/auth/enter_pin.dart';
 import 'package:sun_point/ui/screen/profile/account_info.dart';
 import 'package:sun_point/ui/screen/account/reset_tpin1.dart';
@@ -35,6 +36,7 @@ import 'package:sun_point/ui/screen/wallet/history.dart';
 import 'package:sun_point/ui/screen/wallet/top_up.dart';
 import 'package:sun_point/ui/screen/wallet/topup_requests.dart';
 import 'package:sun_point/ui/screen/wallet/transaction.dart';
+import 'package:sun_point/ui/screen/wallet/transfer.dart';
 import 'package:sun_point/ui/screen/wallet/withdraw.dart';
 import 'package:sun_point/ui/screen/wallet/withdraw_request.dart';
 import 'package:sun_point/ui/screen/wallet/withdraw_requests.dart';
@@ -79,6 +81,8 @@ class Routes {
   static const withdrawRequest = '/withdrawRequest';
   static const topupRequests = '/topupRequests';
   static const topupRequest = '/topupRequest';
+  static const transfer = '/transfer';
+  static const scanQr = '/scanQr';
 
   static Route? generate(RouteSettings settings) {
     switch (settings.name) {
@@ -193,6 +197,10 @@ class Routes {
             builder: (_) => TopupRequestPage(
                   args: args,
                 ));
+      case transfer:
+        return MaterialPageRoute(builder: (_) => TransferPage());
+      case scanQr:
+        return MaterialPageRoute(builder: (_) => const ScanQrPage());
     }
     return null;
   }
