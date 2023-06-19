@@ -220,5 +220,6 @@
     "Receiver Phone Number":"Receiver Phone Number",
     "INVALID_QR":"Invalid QR Code",
     "TRANSFER_TO_SELF":"Transfer to yourselves is not allowed",
-    "Scan QR":"Scan QR"   
+    "Scan QR":"Scan QR",
+    "World Point":"World Point"
 }

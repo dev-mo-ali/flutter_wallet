@@ -46,6 +46,9 @@ class SetupTPINPage extends StatelessWidget {
         body: BlocListener<SetupTPINCubit, SetupTPINState>(
           listenWhen: (previous, current) => current.error.isNotEmpty,
           listener: (context, state) {
+            for (var e in tpinFields) {
+              e['controller'].clear();
+            }
             showDialog(
               context: context,
               builder: (_) => ErrorDialog(error: state.error),
@@ -102,15 +105,23 @@ class SetupTPINPage extends StatelessWidget {
                           focusNode: FocusNode(),
                           onKeyEvent: (value) {
                             if (index > 0 &&
-                                value.physicalKey ==
-                                    PhysicalKeyboardKey.backspace &&
+                                (value.physicalKey ==
+                                        PhysicalKeyboardKey.backspace ||
+                                    value.physicalKey ==
+                                        const PhysicalKeyboardKey(
+                                            0x1100000043)) &&
                                 !e['filled']) {
                               tpinFields[index - 1]['node'].requestFocus();
                             }
                           },
                           child: TextField(
                             controller: e['controller'],
-                            focusNode: e['node'],
+                            focusNode: e['node']
+                              ..addListener(() {
+                                e['controller'].selection =
+                                    TextSelection.fromPosition(TextPosition(
+                                        offset: e['controller'].text.length));
+                              }),
                             maxLength: 1,
                             obscureText: true,
                             textAlign: TextAlign.center,

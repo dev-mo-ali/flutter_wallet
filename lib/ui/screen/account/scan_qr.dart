@@ -7,8 +7,8 @@ import 'package:sun_point/logic/models/account/scan_qr.dart';
 import 'package:sun_point/ui/widgets/erro_dialog.dart';
 
 class ScanQrPage extends StatelessWidget {
-  const ScanQrPage({super.key});
-
+  ScanQrPage({super.key});
+  final MobileScannerController controller = MobileScannerController();
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -48,6 +48,7 @@ class ScanQrPage extends StatelessWidget {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(12),
                           child: MobileScanner(
+                            controller: controller,
                             onDetect: (capture) {
                               if (capture.barcodes.isNotEmpty) {
                                 String qr = capture.barcodes.first.rawValue!;

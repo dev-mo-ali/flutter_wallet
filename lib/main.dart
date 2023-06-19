@@ -57,7 +57,7 @@ class _MyAppState extends State<MyApp> {
           supportedLocales: context.supportedLocales,
           locale: context.locale,
           localizationsDelegates: context.localizationDelegates,
-          title: 'Flutter Wallet App',
+          title: 'World Point'.tr(),
           onGenerateRoute: Routes.generate,
           initialRoute: Routes.startUp,
           debugShowCheckedModeBanner: false,

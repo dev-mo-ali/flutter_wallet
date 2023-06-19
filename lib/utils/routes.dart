@@ -200,7 +200,7 @@ class Routes {
       case transfer:
         return MaterialPageRoute(builder: (_) => TransferPage());
       case scanQr:
-        return MaterialPageRoute(builder: (_) => const ScanQrPage());
+        return MaterialPageRoute(builder: (_) => ScanQrPage());
     }
     return null;
   }

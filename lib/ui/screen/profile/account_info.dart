@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sun_point/logic/controllers/profile/account_info.dart';
 import 'package:sun_point/logic/models/account/account_info.dart';
+import 'package:sun_point/server/server.dart';
 
 import 'package:sun_point/ui/widgets/erro_dialog.dart';
 import 'package:sun_point/utils/validators.dart';
@@ -178,27 +179,32 @@ class AccountInfoPage extends StatelessWidget {
                                             Icons.camera_alt_outlined,
                                             size: 100,
                                           )
-                                        : Image.network(
-                                            state.data!['user']['avatar'],
-                                            fit: BoxFit.cover,
-                                            loadingBuilder: (context, child,
-                                                loadingProgress) {
-                                              if (loadingProgress == null) {
-                                                return child;
-                                              }
+                                        : ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(1000),
+                                            child: Image.network(
+                                              Server.getAbsluteUrl(state
+                                                  .data!['user']['avatar']),
+                                              fit: BoxFit.cover,
+                                              loadingBuilder: (context, child,
+                                                  loadingProgress) {
+                                                if (loadingProgress == null) {
+                                                  return child;
+                                                }
 
-                                              if (loadingProgress
-                                                      .cumulativeBytesLoaded >=
-                                                  (loadingProgress
-                                                          .expectedTotalBytes ??
-                                                      0)) {
-                                                return const Center(
-                                                  child:
-                                                      CircularProgressIndicator(),
-                                                );
-                                              }
-                                              return child;
-                                            },
+                                                if (loadingProgress
+                                                        .cumulativeBytesLoaded >=
+                                                    (loadingProgress
+                                                            .expectedTotalBytes ??
+                                                        0)) {
+                                                  return const Center(
+                                                    child:
+                                                        CircularProgressIndicator(),
+                                                  );
+                                                }
+                                                return child;
+                                              },
+                                            ),
                                           ),
                                   )),
                         ),

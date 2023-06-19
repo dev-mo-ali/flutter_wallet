@@ -255,8 +255,11 @@ class RegisterPage extends StatelessWidget {
                                 focusNode: FocusNode(),
                                 onKeyEvent: (value) {
                                   if (index > 0 &&
-                                      value.physicalKey ==
-                                          PhysicalKeyboardKey.backspace &&
+                                      (value.physicalKey ==
+                                              PhysicalKeyboardKey.backspace ||
+                                          value.physicalKey ==
+                                              const PhysicalKeyboardKey(
+                                                  0x1100000043)) &&
                                       !e['filled']) {
                                     userIdFields[index - 1]['node']
                                         .requestFocus();
@@ -264,7 +267,15 @@ class RegisterPage extends StatelessWidget {
                                 },
                                 child: TextField(
                                   controller: e['controller'],
-                                  focusNode: e['node'],
+                                  focusNode: e['node']
+                                    ..addListener(() {
+                                      e['controller'].selection =
+                                          TextSelection.fromPosition(
+                                              TextPosition(
+                                                  offset: e['controller']
+                                                      .text
+                                                      .length));
+                                    }),
                                   maxLength: 1,
                                   textAlign: TextAlign.center,
                                   keyboardType: TextInputType.number,

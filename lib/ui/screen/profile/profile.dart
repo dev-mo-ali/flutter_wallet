@@ -62,27 +62,30 @@ class ProfilePage extends StatelessWidget {
                                                 Icons.person_outlined,
                                                 size: 45,
                                               )
-                                            : Image.network(
-                                                snapshot.data!.avatar!,
-                                                fit: BoxFit.cover,
-                                                loadingBuilder: (context, child,
-                                                    loadingProgress) {
-                                                  if (loadingProgress == null) {
-                                                    return child;
-                                                  }
+                                            : ClipRRect(
+                                                child: Image.network(
+                                                  snapshot.data!.avatar!,
+                                                  fit: BoxFit.cover,
+                                                  loadingBuilder: (context,
+                                                      child, loadingProgress) {
+                                                    if (loadingProgress ==
+                                                        null) {
+                                                      return child;
+                                                    }
 
-                                                  if (loadingProgress
-                                                          .cumulativeBytesLoaded >=
-                                                      (loadingProgress
-                                                              .expectedTotalBytes ??
-                                                          0)) {
-                                                    return const Center(
-                                                      child:
-                                                          CircularProgressIndicator(),
-                                                    );
-                                                  }
-                                                  return child;
-                                                },
+                                                    if (loadingProgress
+                                                            .cumulativeBytesLoaded >=
+                                                        (loadingProgress
+                                                                .expectedTotalBytes ??
+                                                            0)) {
+                                                      return const Center(
+                                                        child:
+                                                            CircularProgressIndicator(),
+                                                      );
+                                                    }
+                                                    return child;
+                                                  },
+                                                ),
                                               ),
                                       ),
                                     ),
